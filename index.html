@@ -1,1045 +1,761 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
 
 <meta name="viewport"
-      content="width=device-width,
-      initial-scale=1.0,
-      maximum-scale=1.0,
-      user-scalable=no">
+content="width=device-width, initial-scale=1.0">
 
 <title>Adjective Match Table</title>
 
 <style>
 
-/* =========================
-   GENERAL
-========================= */
-
-* {
-    box-sizing: border-box;
-    -webkit-tap-highlight-color: transparent;
+*{
+    box-sizing:border-box;
+    -webkit-tap-highlight-color:transparent;
 }
 
-body {
-    margin: 0;
-    font-family: "Trebuchet MS", Arial, sans-serif;
-    background: #d8b083;
-    color: #4a2d1a;
-    overflow-x: hidden;
+body{
+    margin:0;
+    font-family:"Trebuchet MS",Arial,sans-serif;
+    background:#b87945;
+    color:#4a2c18;
+    overflow-x:hidden;
 }
 
-/* =========================
-   HEADER
-========================= */
+/* HEADER */
 
-header {
-    background: #fff8e8;
-    padding: 16px 10px 13px;
-    text-align: center;
-
-    border-bottom: 4px solid #b77a45;
-
-    box-shadow:
-        0 4px 12px rgba(0,0,0,.20);
-
-    position: relative;
-    z-index: 10;
+header{
+    background:#fff8e8;
+    text-align:center;
+    padding:16px 10px;
+    border-bottom:4px solid #9a6236;
+    box-shadow:0 4px 12px rgba(0,0,0,.2);
 }
 
-h1 {
-    margin: 0;
-
-    font-size:
-        clamp(28px, 7vw, 48px);
-
-    color: #5a3820;
-
-    text-shadow:
-        1px 2px 0 #ead4a9;
+h1{
+    margin:0;
+    font-size:clamp(28px,7vw,46px);
 }
 
-.subtitle {
-    margin-top: 5px;
-
-    font-size:
-        clamp(14px, 3.5vw, 20px);
-
-    color: #6d4b32;
+.subtitle{
+    margin-top:5px;
+    font-size:18px;
 }
 
-.scoreboard {
-    display: flex;
-
-    justify-content: center;
-
-    gap: 10px;
-
-    flex-wrap: wrap;
-
-    margin-top: 12px;
+.score{
+    margin-top:10px;
+    display:flex;
+    justify-content:center;
+    gap:12px;
+    flex-wrap:wrap;
 }
 
-.badge {
-    background: white;
-
-    padding: 8px 16px;
-
-    border-radius: 20px;
-
-    font-weight: bold;
-
-    box-shadow:
-        0 3px 8px rgba(0,0,0,.15);
+.badge{
+    background:white;
+    padding:8px 18px;
+    border-radius:20px;
+    font-weight:bold;
+    box-shadow:0 3px 8px rgba(0,0,0,.15);
 }
 
-/* =========================
-   REAL WOOD TABLE
-========================= */
+/* TABLE */
 
-#game {
-    min-height: calc(100vh - 150px);
-
-    padding: 18px;
-
-    position: relative;
-
-    background-color: #ad713e;
+#table{
+    position:relative;
+    min-height:calc(100vh - 140px);
+    padding:25px;
+    background-color:#ad713e;
 
     background-image:
-
-        linear-gradient(
-            90deg,
-            rgba(70,35,10,.08) 2px,
-            transparent 2px
-        ),
-
-        linear-gradient(
-            rgba(255,255,255,.04) 1px,
-            transparent 1px
-        );
-
-    background-size:
-        100px 100%,
-        100% 30px;
+    repeating-linear-gradient(
+        90deg,
+        rgba(80,40,10,.07) 0,
+        rgba(80,40,10,.07) 2px,
+        transparent 2px,
+        transparent 90px
+    );
 }
 
-/* =========================
-   TITLES
-========================= */
+/* TITLE */
 
-.section-title {
-    text-align: center;
-
-    color: white;
-
-    font-size: 21px;
-
-    font-weight: bold;
-
-    text-shadow:
-        0 2px 3px #4d2a15;
-
-    margin: 5px 0 12px;
+.section-title{
+    text-align:center;
+    color:white;
+    font-size:22px;
+    font-weight:bold;
+    text-shadow:0 2px 3px #43230f;
+    margin-bottom:15px;
 }
 
-/* =========================
-   TARGETS
-========================= */
+/* BOARD */
 
-.targets {
-    max-width: 1100px;
-
-    margin: auto;
-
-    display: grid;
-
-    grid-template-columns:
-        repeat(5, 1fr);
-
-    gap: 10px;
+.board{
+    position:relative;
+    max-width:1150px;
+    margin:auto;
+    min-height:620px;
 }
 
-.target {
-    min-height: 115px;
+/* SVG LINES */
 
-    background:
-        rgba(255,249,229,.97);
+#connections{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    pointer-events:none;
+    z-index:1;
+}
 
-    border:
-        4px dashed #916b49;
+.connection{
+    stroke:#5f3bff;
+    stroke-width:5;
+    stroke-linecap:round;
+    fill:none;
+    filter:drop-shadow(0 2px 2px rgba(0,0,0,.25));
+    stroke-dasharray:400;
+    stroke-dashoffset:400;
+    animation:drawLine .6s ease forwards;
+}
 
-    border-radius: 18px;
+@keyframes drawLine{
+    to{
+        stroke-dashoffset:0;
+    }
+}
 
-    display: flex;
+/* COLUMNS */
 
-    flex-direction: column;
+.flashcards,
+.adjectives{
+    position:absolute;
+    top:0;
+    width:270px;
+    z-index:5;
+}
 
-    align-items: center;
+.flashcards{
+    left:0;
+}
 
-    justify-content: center;
+.adjectives{
+    right:0;
+}
 
-    text-align: center;
+/* LABEL */
+
+.column-title{
+    text-align:center;
+    background:#fff6d5;
+    padding:9px;
+    border-radius:18px;
+    font-weight:bold;
+    margin-bottom:12px;
+    box-shadow:0 4px 8px rgba(0,0,0,.2);
+}
+
+/* FLASHCARD */
+
+.card{
+    width:240px;
+    height:135px;
+    margin:0 auto 13px;
+
+    background:#fffdf5;
+
+    border:3px solid #d8c8a8;
+
+    border-radius:14px;
+
+    padding:7px;
 
     box-shadow:
-        0 7px 12px rgba(50,25,5,.25),
+        0 7px 0 #80502e,
+        0 10px 16px rgba(40,20,5,.3);
 
-        inset
-        0 0 0 2px
-        rgba(255,255,255,.8);
+    cursor:grab;
 
-    transition:
-        .2s ease;
+    touch-action:none;
+    user-select:none;
+
+    display:flex;
+    align-items:center;
+    gap:10px;
+
+    position:relative;
+
+    transition:.15s;
 }
 
-.target.active {
-    transform: scale(1.05);
+.card:hover{
+    transform:translateY(-4px) rotate(-1deg);
+}
 
-    background: #fff0a3;
+.card.dragging{
+    position:fixed;
+    z-index:10000;
+    transform:scale(1.08) rotate(3deg);
+    box-shadow:0 20px 30px rgba(0,0,0,.4);
+}
 
-    border-color: #e7a900;
+.card.matched{
+    opacity:.65;
+    cursor:default;
+}
+
+.photo{
+    width:120px;
+    height:100px;
+    object-fit:cover;
+    border-radius:9px;
+    background:#ddd;
+    pointer-events:none;
+}
+
+.card-name{
+    font-weight:bold;
+    font-size:15px;
+    text-align:center;
+}
+
+/* ADJECTIVE */
+
+.adjective{
+    width:230px;
+    height:95px;
+    margin:0 auto 53px;
+
+    background:#fff8df;
+
+    border:4px dashed #876746;
+
+    border-radius:18px;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    font-size:27px;
+    font-weight:900;
 
     box-shadow:
-        0 10px 18px rgba(60,30,5,.3);
+        inset 0 0 0 2px white,
+        0 6px 12px rgba(0,0,0,.25);
+
+    transition:.2s;
+
+    position:relative;
 }
 
-.target.completed {
-    background: #dfffd9;
-
-    border-color: #4caf50;
-
-    border-style: solid;
+.adjective.active{
+    transform:scale(1.07);
+    background:#fff09a;
+    border-color:#e4a600;
 }
 
-.pair {
-    font-size: 12px;
-
-    opacity: .55;
-
-    margin-bottom: 4px;
+.adjective.matched{
+    background:#dfffdc;
+    border-color:#49a942;
+    border-style:solid;
 }
 
-.target-word {
-    font-size:
-        clamp(17px, 3vw, 26px);
-
-    font-weight: 900;
-
-    color: #58371f;
+.adjective.correct-pulse{
+    animation:pulse .5s ease;
 }
 
-.target-slots {
-    font-size: 12px;
-
-    margin-top: 5px;
-
-    color: #777;
-}
-
-/* =========================
-   CARDS
-========================= */
-
-.cards {
-    max-width: 1100px;
-
-    margin: 15px auto 30px;
-
-    display: grid;
-
-    grid-template-columns:
-        repeat(5, 1fr);
-
-    gap: 14px;
-}
-
-.card {
-    background:
-        linear-gradient(
-            145deg,
-            #ffffff,
-            #f6f0dd
-        );
-
-    border:
-        2px solid #d4c6a5;
-
-    border-radius: 16px;
-
-    min-height: 175px;
-
-    display: flex;
-
-    flex-direction: column;
-
-    justify-content: center;
-
-    align-items: center;
-
-    padding: 9px;
-
-    cursor: grab;
-
-    user-select: none;
-
-    touch-action: none;
-
-    position: relative;
-
-    box-shadow:
-
-        0 7px 0 #86552f,
-
-        0 10px 16px
-        rgba(40,20,5,.30);
-
-    transition:
-        transform .18s ease,
-        box-shadow .18s ease;
-}
-
-.card:hover {
-    transform:
-        translateY(-5px)
-        rotate(-1deg);
-}
-
-.card.dragging {
-    cursor: grabbing;
-
-    transform:
-        scale(1.08)
-        rotate(3deg);
-
-    box-shadow:
-        0 20px 30px
-        rgba(30,15,5,.4);
-
-    z-index: 9999;
-}
-
-.card.correct {
-    animation:
-        correctAnimation .6s ease;
-
-    background:
-        #e2ffe0;
-}
-
-.card.wrong {
-    animation:
-        wrongAnimation .4s ease;
-}
-
-/* =========================
-   REAL IMAGE
-========================= */
-
-.photo {
-    width: 100%;
-
-    height: 115px;
-
-    object-fit: cover;
-
-    border-radius: 11px;
-
-    pointer-events: none;
-
-    box-shadow:
-        0 2px 5px
-        rgba(0,0,0,.20);
-
-    background: #ddd;
-}
-
-.card-label {
-    margin-top: 7px;
-
-    font-size: 14px;
-
-    font-weight: 900;
-
-    letter-spacing: .5px;
-
-    color: #63432b;
-}
-
-/* =========================
-   BUTTON
-========================= */
-
-.controls {
-    text-align: center;
-
-    padding-bottom: 30px;
-}
-
-button {
-    border: none;
-
-    background: #fff5bd;
-
-    color: #56361f;
-
-    padding: 13px 25px;
-
-    border-radius: 25px;
-
-    font-size: 18px;
-
-    font-weight: bold;
-
-    cursor: pointer;
-
-    box-shadow:
-        0 5px 0 #80512f;
-
-    transition: .1s;
-}
-
-button:active {
-    transform: translateY(4px);
-
-    box-shadow:
-        0 1px 0 #80512f;
-}
-
-/* =========================
-   POPUP MESSAGE
-========================= */
-
-#message {
-    position: fixed;
-
-    left: 50%;
-
-    top: 50%;
-
-    transform:
-        translate(-50%,-50%)
-        scale(.7);
-
-    opacity: 0;
-
-    pointer-events: none;
-
-    background: white;
-
-    border-radius: 25px;
-
-    padding: 25px 35px;
-
-    font-size:
-        clamp(22px, 5vw, 34px);
-
-    font-weight: bold;
-
-    text-align: center;
-
-    box-shadow:
-        0 15px 45px
-        rgba(0,0,0,.35);
-
-    z-index: 20000;
-
-    transition: .25s ease;
-}
-
-#message.show {
-    opacity: 1;
-
-    transform:
-        translate(-50%,-50%)
-        scale(1);
-}
-
-/* =========================
-   CONFETTI
-========================= */
-
-.confetti {
-    position: fixed;
-
-    width: 10px;
-
-    height: 18px;
-
-    top: -20px;
-
-    z-index: 30000;
-
-    pointer-events: none;
-
-    animation:
-        fall 1.4s linear forwards;
-}
-
-/* =========================
-   ANIMATIONS
-========================= */
-
-@keyframes correctAnimation {
-
-    0% {
-        transform: scale(1);
-    }
-
-    40% {
-        transform:
-            scale(1.18)
-            rotate(4deg);
-    }
-
-    100% {
-        transform: scale(1);
+@keyframes pulse{
+    50%{
+        transform:scale(1.12);
     }
 }
 
-@keyframes wrongAnimation {
+/* POPUP */
 
-    0%,100% {
-        transform: translateX(0);
-    }
+#message{
+    position:fixed;
+    left:50%;
+    top:50%;
 
-    25% {
-        transform: translateX(-10px);
-    }
+    transform:translate(-50%,-50%) scale(.7);
 
-    75% {
-        transform: translateX(10px);
+    opacity:0;
+
+    pointer-events:none;
+
+    background:white;
+
+    padding:25px 35px;
+
+    border-radius:25px;
+
+    font-size:30px;
+    font-weight:bold;
+
+    text-align:center;
+
+    box-shadow:0 15px 40px rgba(0,0,0,.35);
+
+    z-index:20000;
+
+    transition:.25s;
+}
+
+#message.show{
+    opacity:1;
+    transform:translate(-50%,-50%) scale(1);
+}
+
+/* BUTTON */
+
+.controls{
+    text-align:center;
+    margin-top:20px;
+}
+
+button{
+    border:none;
+    background:#fff4b5;
+    padding:13px 25px;
+    border-radius:25px;
+    font-size:18px;
+    font-weight:bold;
+    color:#55331c;
+    box-shadow:0 5px 0 #80502e;
+}
+
+button:active{
+    transform:translateY(4px);
+    box-shadow:0 1px 0 #80502e;
+}
+
+/* CONFETTI */
+
+.confetti{
+    position:fixed;
+    width:10px;
+    height:18px;
+    top:-20px;
+    z-index:30000;
+    animation:fall 1.3s linear forwards;
+}
+
+@keyframes fall{
+    to{
+        transform:translateY(100vh) rotate(720deg);
+        opacity:0;
     }
 }
 
-@keyframes fall {
+/* MOBILE */
 
-    from {
-        transform:
-            translateY(-20px)
-            rotate(0deg);
+@media(max-width:800px){
 
-        opacity: 1;
+    #table{
+        padding:12px;
     }
 
-    to {
-        transform:
-            translateY(100vh)
-            rotate(720deg);
-
-        opacity: 0;
-    }
-}
-
-/* =========================
-   TABLET
-========================= */
-
-@media (max-width: 850px) {
-
-    .targets {
-        grid-template-columns:
-            repeat(2,1fr);
+    .board{
+        min-height:950px;
     }
 
-    .cards {
-        grid-template-columns:
-            repeat(2,1fr);
-    }
-}
-
-/* =========================
-   PHONE
-========================= */
-
-@media (max-width: 500px) {
-
-    #game {
-        padding: 10px;
+    .flashcards,
+    .adjectives{
+        width:48%;
     }
 
-    .targets {
-        grid-template-columns:
-            repeat(2,1fr);
-
-        gap: 8px;
+    .flashcards{
+        left:0;
     }
 
-    .cards {
-        grid-template-columns:
-            repeat(2,1fr);
-
-        gap: 10px;
+    .adjectives{
+        right:0;
     }
 
-    .card {
-        min-height: 160px;
+    .card{
+        width:100%;
+        height:115px;
     }
 
-    .photo {
-        height: 100px;
+    .photo{
+        width:75px;
+        height:85px;
     }
 
-    .target {
-        min-height: 90px;
+    .card-name{
+        font-size:12px;
     }
+
+    .adjective{
+        width:100%;
+        height:75px;
+        margin-bottom:73px;
+        font-size:21px;
+    }
+
 }
 
 </style>
-</head>
 
+</head>
 
 <body>
 
-<!-- =========================
-     HEADER
-========================= -->
 
 <header>
 
-    <h1>
-        🌈 Adjective Match!
-    </h1>
+<h1>🌈 Adjective Match!</h1>
 
-    <div class="subtitle">
-        Drag each picture to the correct adjective.
-    </div>
+<div class="subtitle">
+Drag the flashcards to the correct adjective.
+</div>
 
-    <div class="scoreboard">
+<div class="score">
 
-        <div class="badge">
-            ⭐ Score:
-            <span id="score">0</span>
-        </div>
+<div class="badge">
+⭐ Score: <span id="score">0</span>
+</div>
 
-        <div class="badge">
-            🎯
-            <span id="progress">0</span>
-            / 10
-        </div>
+<div class="badge">
+🎯 <span id="progress">0</span> / 10
+</div>
 
-    </div>
+</div>
 
 </header>
 
 
-<!-- =========================
-     GAME TABLE
-========================= -->
+<div id="table">
 
-<main id="game">
+<div class="section-title">
+🃏 MATCH THE FLASHCARDS!
+</div>
 
-    <div class="section-title">
-        🧠 Match the pictures with the adjectives!
-    </div>
 
+<div class="board">
 
-    <!-- TARGETS -->
+<svg id="connections"></svg>
 
-    <section class="targets">
 
-        <div class="target"
-             data-adjective="big">
+<!-- FLASHCARDS -->
 
-            <div class="pair">
-                BIG / SMALL
-            </div>
+<div class="flashcards">
 
-            <div class="target-word">
-                BIG
-            </div>
+<div class="column-title">
+📸 FLASHCARDS
+</div>
 
-            <div class="target-slots">
-                Drop here
-            </div>
 
-        </div>
+<div class="card"
+data-answer="big"
+data-search="African_bush_elephant">
 
+<img class="photo">
 
-        <div class="target"
-             data-adjective="small">
+<div class="card-name">
+ELEPHANT
+</div>
 
-            <div class="pair">
-                BIG / SMALL
-            </div>
+</div>
 
-            <div class="target-word">
-                SMALL
-            </div>
 
-            <div class="target-slots">
-                Drop here
-            </div>
+<div class="card"
+data-answer="small"
+data-search="fe4db989">
 
-        </div>
+<img class="photo">
 
+<div class="card-name">
+MOUSE
+</div>
 
-        <div class="target"
-             data-adjective="fast">
+</div>
 
-            <div class="pair">
-                FAST / SLOW
-            </div>
 
-            <div class="target-word">
-                FAST
-            </div>
+<div class="card"
+data-answer="fast"
+data-search="Cheetah_walking">
 
-            <div class="target-slots">
-                Drop here
-            </div>
+<img class="photo">
 
-        </div>
+<div class="card-name">
+CHEETAH
+</div>
 
+</div>
 
-        <div class="target"
-             data-adjective="slow">
 
-            <div class="pair">
-                FAST / SLOW
-            </div>
+<div class="card"
+data-answer="slow"
+data-search="Terrapene_carolina">
 
-            <div class="target-word">
-                SLOW
-            </div>
+<img class="photo">
 
-            <div class="target-slots">
-                Drop here
-            </div>
+<div class="card-name">
+TURTLE
+</div>
 
-        </div>
+</div>
 
 
-        <div class="target"
-             data-adjective="tall">
+<div class="card"
+data-answer="tall"
+data-search="Palm">
 
-            <div class="pair">
-                TALL / SHORT
-            </div>
+<img class="photo">
 
-            <div class="target-word">
-                TALL
-            </div>
+<div class="card-name">
+TALL TREE
+</div>
 
-            <div class="target-slots">
-                Drop here
-            </div>
+</div>
 
-        </div>
 
+<div class="card"
+data-answer="short"
+data-search="cd86cf7e">
 
-        <div class="target"
-             data-adjective="short">
+<img class="photo">
 
-            <div class="pair">
-                TALL / SHORT
-            </div>
+<div class="card-name">
+SHORT
+</div>
 
-            <div class="target-word">
-                SHORT
-            </div>
+</div>
 
-            <div class="target-slots">
-                Drop here
-            </div>
 
-        </div>
+<div class="card"
+data-answer="happy"
+data-search="Happy_Child">
 
+<img class="photo">
 
-        <div class="target"
-             data-adjective="happy">
+<div class="card-name">
+HAPPY
+</div>
 
-            <div class="pair">
-                HAPPY / SAD
-            </div>
+</div>
 
-            <div class="target-word">
-                HAPPY
-            </div>
 
-            <div class="target-slots">
-                Drop here
-            </div>
+<div class="card"
+data-answer="sad"
+data-search="Malachite_cat">
 
-        </div>
+<img class="photo">
 
+<div class="card-name">
+SAD
+</div>
 
-        <div class="target"
-             data-adjective="sad">
+</div>
 
-            <div class="pair">
-                HAPPY / SAD
-            </div>
 
-            <div class="target-word">
-                SAD
-            </div>
+<div class="card"
+data-answer="hot"
+data-search="Mm00a">
 
-            <div class="target-slots">
-                Drop here
-            </div>
+<img class="photo">
 
-        </div>
+<div class="card-name">
+HOT
+</div>
 
+</div>
 
-        <div class="target"
-             data-adjective="hot">
 
-            <div class="pair">
-                HOT / COLD
-            </div>
+<div class="card"
+data-answer="cold"
+data-search="Fir_trees">
 
-            <div class="target-word">
-                HOT
-            </div>
+<img class="photo">
 
-            <div class="target-slots">
-                Drop here
-            </div>
+<div class="card-name">
+COLD
+</div>
 
-        </div>
+</div>
 
+</div>
 
-        <div class="target"
-             data-adjective="cold">
 
-            <div class="pair">
-                HOT / COLD
-            </div>
+<!-- ADJECTIVES -->
 
-            <div class="target-word">
-                COLD
-            </div>
+<div class="adjectives">
 
-            <div class="target-slots">
-                Drop here
-            </div>
+<div class="column-title">
+✨ ADJECTIVES
+</div>
 
-        </div>
 
-    </section>
+<div class="adjective"
+data-answer="big">
+BIG
+</div>
 
+<div class="adjective"
+data-answer="small">
+SMALL
+</div>
 
-    <!-- =========================
-         CARDS
-    ========================= -->
+<div class="adjective"
+data-answer="fast">
+FAST
+</div>
 
-    <div class="section-title"
-         style="margin-top:25px;">
+<div class="adjective"
+data-answer="slow">
+SLOW
+</div>
 
-        🃏 Pick up a card and drag it!
+<div class="adjective"
+data-answer="tall">
+TALL
+</div>
 
-    </div>
+<div class="adjective"
+data-answer="short">
+SHORT
+</div>
 
+<div class="adjective"
+data-answer="happy">
+HAPPY
+</div>
 
-    <section class="cards"
-             id="cards">
+<div class="adjective"
+data-answer="sad">
+SAD
+</div>
 
+<div class="adjective"
+data-answer="hot">
+HOT
+</div>
 
-        <!-- ELEPHANT -->
+<div class="adjective"
+data-answer="cold">
+COLD
+</div>
 
-        <div class="card"
-             data-answer="big"
-             data-word="Elephant">
+</div>
 
-            <img
-                class="photo"
-                src="https://loremflickr.com/500/350/elephant"
-                alt="Elephant">
+</div>
 
-            <div class="card-label">
-                ELEPHANT
-            </div>
 
-        </div>
+<div class="controls">
 
+<button onclick="location.reload()">
+🔄 Play Again
+</button>
 
-        <!-- MOUSE -->
+</div>
 
-        <div class="card"
-             data-answer="small"
-             data-word="Mouse">
+</div>
 
-            <img
-                class="photo"
-                src="https://loremflickr.com/500/350/mouse"
-                alt="Mouse">
-
-            <div class="card-label">
-                MOUSE
-            </div>
-
-        </div>
-
-
-        <!-- CHEETAH -->
-
-        <div class="card"
-             data-answer="fast"
-             data-word="Cheetah">
-
-            <img
-                class="photo"
-                src="https://loremflickr.com/500/350/cheetah"
-                alt="Cheetah">
-
-            <div class="card-label">
-                CHEETAH
-            </div>
-
-        </div>
-
-
-        <!-- TURTLE -->
-
-        <div class="card"
-             data-answer="slow"
-             data-word="Turtle">
-
-            <img
-                class="photo"
-                src="https://loremflickr.com/500/350/turtle"
-                alt="Turtle">
-
-            <div class="card-label">
-                TURTLE
-            </div>
-
-        </div>
-
-
-        <!-- TREE -->
-
-        <div class="card"
-             data-answer="tall"
-             data-word="Tree">
-
-            <img
-                class="photo"
-                src="https://loremflickr.com/500/350/tall/tree"
-                alt="Tall tree">
-
-            <div class="card-label">
-                TREE
-            </div>
-
-        </div>
-
-
-        <!-- FLOWER -->
-
-        <div class="card"
-             data-answer="short"
-             data-word="Flower">
-
-            <img
-                class="photo"
-                src="https://loremflickr.com/500/350/short,flower"
-                alt="Short flower">
-
-            <div class="card-label">
-                FLOWER
-            </div>
-
-        </div>
-
-
-        <!-- HAPPY -->
-
-        <div class="card"
-             data-answer="happy"
-             data-word="Happy">
-
-            <img
-                class="photo"
-                src="https://loremflickr.com/500/350/happy,child"
-                alt="Happy child">
-
-            <div class="card-label">
-                HAPPY
-            </div>
-
-        </div>
-
-
-        <!-- SAD -->
-
-        <div class="card"
-             data-answer="sad"
-             data-word="Sad">
-
-            <img
-                class="photo"
-                src="https://loremflickr.com/500/350/sad,child"
-                alt="Sad child">
-
-            <div class="card-label">
-                SAD
-            </div>
-
-        </div>
-
-
-        <!-- HOT -->
-
-        <div class="card"
-             data-answer="hot"
-             data-word="Hot">
-
-            <img
-                class="photo"
-                src="https://loremflickr.com/500/350/hot,sun"
-                alt="Hot sunny day">
-
-            <div class="card-label">
-                HOT
-            </div>
-
-        </div>
-
-
-        <!-- COLD -->
-
-        <div class="card"
-             data-answer="cold"
-             data-word="Cold">
-
-            <img
-                class="photo"
-                src="https://loremflickr.com/500/350/cold,snow"
-                alt="Cold snowy day">
-
-            <div class="card-label">
-                COLD
-            </div>
-
-        </div>
-
-
-    </section>
-
-
-    <div class="controls">
-
-        <button onclick="resetGame()">
-            🔄 Play Again
-        </button>
-
-    </div>
-
-</main>
-
-
-<!-- POPUP -->
 
 <div id="message"></div>
 
 
 <script>
 
-/* =================================================
+/* ==================================================
+   IMPORTANT:
+   AUTOMATICALLY FIND YOUR IMAGES
+================================================== */
+
+const imageFiles = [
+"African_bush_elephant",
+"fe4db989",
+"Cheetah_walking",
+"Terrapene_carolina",
+"Palm",
+"cd86cf7e",
+"Happy_Child",
+"Malachite_cat",
+"Mm00a",
+"Fir_trees"
+];
+
+
+/*
+GitHub doesn't let JavaScript directly
+list files in a repository.
+
+So we use the GitHub API to read the
+repository contents automatically.
+*/
+
+async function loadImages(){
+
+    const path = window.location.pathname;
+
+    const parts = path.split("/");
+
+    const user = parts[1];
+
+    const repo = parts[2];
+
+    const api =
+    `https://api.github.com/repos/${user}/${repo}/contents/`;
+
+    try{
+
+        const response =
+            await fetch(api);
+
+        const files =
+            await response.json();
+
+
+        document
+        .querySelectorAll(".card")
+        .forEach(card => {
+
+            const search =
+                card.dataset.search
+                .toLowerCase();
+
+
+            const match =
+                files.find(file =>
+                    file.name
+                    .toLowerCase()
+                    .includes(search)
+                );
+
+
+            if(match){
+
+                card.querySelector(".photo").src =
+                    match.download_url;
+
+            }
+
+        });
+
+    }
+
+    catch(error){
+
+        console.log(
+            "Could not automatically load images."
+        );
+
+    }
+
+}
+
+
+/* LOAD PHOTOS */
+
+loadImages();
+
+
+/* ==================================================
    VARIABLES
-================================================= */
+================================================== */
 
 let score = 0;
 
@@ -1053,55 +769,47 @@ let offsetY = 0;
 
 
 const cards =
-    document.querySelectorAll(".card");
+document.querySelectorAll(".card");
 
 const targets =
-    document.querySelectorAll(".target");
+document.querySelectorAll(".adjective");
 
-const scoreElement =
-    document.getElementById("score");
-
-const progressElement =
-    document.getElementById("progress");
-
-const message =
-    document.getElementById("message");
+const svg =
+document.getElementById("connections");
 
 
-/* =================================================
+/* ==================================================
    VOICE
-================================================= */
+================================================== */
 
-function speak(text) {
+function speak(text){
 
-    if (!("speechSynthesis" in window)) {
+    if(!("speechSynthesis" in window))
         return;
-    }
 
-    window.speechSynthesis.cancel();
+    speechSynthesis.cancel();
 
     const voice =
         new SpeechSynthesisUtterance(text);
 
     voice.lang = "en-US";
 
-    voice.rate = 0.85;
+    voice.rate = .85;
 
-    voice.pitch = 1.15;
+    voice.pitch = 1.1;
 
-    voice.volume = 1;
+    speechSynthesis.speak(voice);
 
-    window.speechSynthesis.speak(voice);
 }
 
 
-/* =================================================
-   SOUND EFFECT
-================================================= */
+/* ==================================================
+   SOUND
+================================================== */
 
-function playSound(type) {
+function sound(type){
 
-    try {
+    try{
 
         const AudioContext =
             window.AudioContext ||
@@ -1116,14 +824,13 @@ function playSound(type) {
         const gain =
             audio.createGain();
 
+
         oscillator.connect(gain);
 
         gain.connect(audio.destination);
 
 
-        if (type === "correct") {
-
-            oscillator.type = "sine";
+        if(type==="correct"){
 
             oscillator.frequency.setValueAtTime(
                 600,
@@ -1132,15 +839,13 @@ function playSound(type) {
 
             oscillator.frequency.exponentialRampToValueAtTime(
                 1000,
-                audio.currentTime + .15
+                audio.currentTime+.2
             );
 
         }
 
 
-        if (type === "wrong") {
-
-            oscillator.type = "sawtooth";
+        if(type==="wrong"){
 
             oscillator.frequency.setValueAtTime(
                 180,
@@ -1149,24 +854,7 @@ function playSound(type) {
 
             oscillator.frequency.exponentialRampToValueAtTime(
                 100,
-                audio.currentTime + .2
-            );
-
-        }
-
-
-        if (type === "card") {
-
-            oscillator.type = "triangle";
-
-            oscillator.frequency.setValueAtTime(
-                250,
-                audio.currentTime
-            );
-
-            oscillator.frequency.exponentialRampToValueAtTime(
-                400,
-                audio.currentTime + .08
+                audio.currentTime+.2
             );
 
         }
@@ -1179,94 +867,547 @@ function playSound(type) {
 
         gain.gain.exponentialRampToValueAtTime(
             .001,
-            audio.currentTime + .25
+            audio.currentTime+.25
         );
+
 
         oscillator.start();
 
         oscillator.stop(
-            audio.currentTime + .25
+            audio.currentTime+.25
         );
 
     }
 
-    catch(error) {}
+    catch(e){}
 
 }
 
 
-/* =================================================
+/* ==================================================
+   DRAG
+================================================== */
+
+cards.forEach(card=>{
+
+    card.addEventListener(
+        "pointerdown",
+        startDrag
+    );
+
+});
+
+
+function startDrag(e){
+
+    if(
+        this.classList.contains(
+            "matched"
+        )
+    )
+        return;
+
+
+    draggedCard = this;
+
+    this.classList.add(
+        "dragging"
+    );
+
+
+    speak(
+        this.dataset.answer
+    );
+
+
+    const rect =
+        this.getBoundingClientRect();
+
+
+    offsetX =
+        e.clientX -
+        rect.left;
+
+    offsetY =
+        e.clientY -
+        rect.top;
+
+
+    this.style.width =
+        rect.width+"px";
+
+    this.style.left =
+        e.clientX -
+        offsetX+"px";
+
+    this.style.top =
+        e.clientY -
+        offsetY+"px";
+
+
+    this.setPointerCapture(
+        e.pointerId
+    );
+
+
+    this.addEventListener(
+        "pointermove",
+        moveDrag
+    );
+
+
+    this.addEventListener(
+        "pointerup",
+        endDrag,
+        {once:true}
+    );
+
+}
+
+
+/* ==================================================
+   MOVE
+================================================== */
+
+function moveDrag(e){
+
+    if(!draggedCard)
+        return;
+
+
+    draggedCard.style.left =
+        e.clientX -
+        offsetX+"px";
+
+
+    draggedCard.style.top =
+        e.clientY -
+        offsetY+"px";
+
+
+    targets.forEach(target=>{
+
+        const rect =
+            target.getBoundingClientRect();
+
+
+        const inside =
+            e.clientX >= rect.left &&
+            e.clientX <= rect.right &&
+            e.clientY >= rect.top &&
+            e.clientY <= rect.bottom;
+
+
+        target.classList.toggle(
+            "active",
+            inside
+        );
+
+    });
+
+}
+
+
+/* ==================================================
+   END
+================================================== */
+
+function endDrag(e){
+
+    const card =
+        draggedCard;
+
+
+    card.removeEventListener(
+        "pointermove",
+        moveDrag
+    );
+
+
+    const rect =
+        card.getBoundingClientRect();
+
+
+    const x =
+        rect.left +
+        rect.width/2;
+
+
+    const y =
+        rect.top +
+        rect.height/2;
+
+
+    let targetFound =
+        null;
+
+
+    targets.forEach(target=>{
+
+        const r =
+            target.getBoundingClientRect();
+
+
+        if(
+            x>=r.left &&
+            x<=r.right &&
+            y>=r.top &&
+            y<=r.bottom
+        ){
+
+            targetFound =
+                target;
+
+        }
+
+
+        target.classList.remove(
+            "active"
+        );
+
+    });
+
+
+    if(
+        targetFound &&
+        targetFound.dataset.answer ===
+        card.dataset.answer
+    ){
+
+        correctMatch(
+            card,
+            targetFound
+        );
+
+    }
+
+    else{
+
+        wrongMatch(card);
+
+    }
+
+
+    draggedCard = null;
+
+}
+
+
+/* ==================================================
+   CORRECT
+================================================== */
+
+function correctMatch(
+    card,
+    target
+){
+
+    score += 10;
+
+    completed++;
+
+
+    document
+    .getElementById("score")
+    .textContent =
+        score;
+
+
+    document
+    .getElementById("progress")
+    .textContent =
+        completed;
+
+
+    card.classList.remove(
+        "dragging"
+    );
+
+    card.classList.add(
+        "matched"
+    );
+
+
+    target.classList.add(
+        "matched"
+    );
+
+
+    drawConnection(
+        card,
+        target
+    );
+
+
+    sound("correct");
+
+
+    speak(
+        target.dataset.answer +
+        ". Great job!"
+    );
+
+
+    showMessage(
+        "🎉 Great job!"
+    );
+
+
+    if(completed===10){
+
+        setTimeout(()=>{
+
+            speak(
+                "Amazing! You matched all the adjectives!"
+            );
+
+            showMessage(
+                "🏆 AMAZING!",
+                3000
+            );
+
+            confetti();
+
+        },700);
+
+    }
+
+
+    setTimeout(()=>{
+
+        card.style.position =
+            "relative";
+
+        card.style.left = "";
+
+        card.style.top = "";
+
+        card.style.width = "";
+
+    },300);
+
+}
+
+
+/* ==================================================
+   CONNECTION LINE
+================================================== */
+
+function drawConnection(
+    card,
+    target
+){
+
+    const board =
+        document
+        .querySelector(".board")
+        .getBoundingClientRect();
+
+
+    const c =
+        card.getBoundingClientRect();
+
+
+    const t =
+        target.getBoundingClientRect();
+
+
+    const x1 =
+        c.right -
+        board.left;
+
+
+    const y1 =
+        c.top +
+        c.height/2 -
+        board.top;
+
+
+    const x2 =
+        t.left -
+        board.left;
+
+
+    const y2 =
+        t.top +
+        t.height/2 -
+        board.top;
+
+
+    const line =
+        document.createElementNS(
+            "http://www.w3.org/2000/svg",
+            "line"
+        );
+
+
+    line.setAttribute(
+        "x1",
+        x1
+    );
+
+    line.setAttribute(
+        "y1",
+        y1
+    );
+
+    line.setAttribute(
+        "x2",
+        x2
+    );
+
+    line.setAttribute(
+        "y2",
+        y2
+    );
+
+
+    line.classList.add(
+        "connection"
+    );
+
+
+    svg.appendChild(
+        line
+    );
+
+}
+
+
+/* ==================================================
+   WRONG
+================================================== */
+
+function wrongMatch(card){
+
+    card.classList.remove(
+        "dragging"
+    );
+
+
+    card.animate(
+        [
+            {transform:"translateX(0)"},
+            {transform:"translateX(-10px)"},
+            {transform:"translateX(10px)"},
+            {transform:"translateX(0)"}
+        ],
+        {
+            duration:400
+        }
+    );
+
+
+    sound("wrong");
+
+    speak(
+        "Try again!"
+    );
+
+
+    showMessage(
+        "💭 Try again!"
+    );
+
+
+    setTimeout(()=>{
+
+        card.style.position =
+            "relative";
+
+        card.style.left = "";
+
+        card.style.top = "";
+
+        card.style.width = "";
+
+    },400);
+
+}
+
+
+/* ==================================================
    MESSAGE
-================================================= */
+================================================== */
 
 function showMessage(
     text,
-    duration = 900
-) {
+    duration=900
+){
 
-    message.textContent = text;
+    const box =
+        document.getElementById(
+            "message"
+        );
 
-    message.classList.add("show");
 
-    setTimeout(() => {
+    box.textContent =
+        text;
 
-        message.classList.remove("show");
 
-    }, duration);
+    box.classList.add(
+        "show"
+    );
+
+
+    setTimeout(()=>{
+
+        box.classList.remove(
+            "show"
+        );
+
+    },duration);
 
 }
 
 
-/* =================================================
+/* ==================================================
    CONFETTI
-================================================= */
+================================================== */
 
-function celebrate() {
+function confetti(){
 
-    for (
-        let i = 0;
-        i < 35;
+    for(
+        let i=0;
+        i<40;
         i++
-    ) {
+    ){
 
         const piece =
-            document.createElement("div");
+            document.createElement(
+                "div"
+            );
+
 
         piece.className =
             "confetti";
 
+
         piece.style.left =
             Math.random() *
-            window.innerWidth +
-            "px";
+            innerWidth+"px";
+
 
         piece.style.background =
             `hsl(${Math.random()*360},
-            80%,
-            60%)`;
+            80%,60%)`;
 
-        piece.style.animationDuration =
-            (0.8 +
-            Math.random() * 1.2) +
-            "s";
 
-        document.body.appendChild(piece);
+        document.body.appendChild(
+            piece
+        );
 
-        setTimeout(() => {
 
-            piece.remove();
-
-        }, 2200);
+        setTimeout(
+            ()=>piece.remove(),
+            2000
+        );
 
     }
 
 }
 
+</script>
 
-/* =================================================
-   CARD TOUCH
-================================================= */
-
-cards.forEach(card => {
-
-    card.addEve
+</body>
+</html>
