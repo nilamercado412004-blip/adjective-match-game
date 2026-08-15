@@ -2,11 +2,21 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+<meta name="viewport"
+      content="width=device-width,
+      initial-scale=1.0,
+      maximum-scale=1.0,
+      user-scalable=no">
 
 <title>Adjective Match Table</title>
 
 <style>
+
+/* =========================
+   GENERAL
+========================= */
+
 * {
     box-sizing: border-box;
     -webkit-tap-highlight-color: transparent;
@@ -15,330 +25,532 @@
 body {
     margin: 0;
     font-family: "Trebuchet MS", Arial, sans-serif;
-    background: #d9c09a;
-    color: #3f2b1d;
+    background: #d8b083;
+    color: #4a2d1a;
     overflow-x: hidden;
 }
 
+/* =========================
+   HEADER
+========================= */
+
 header {
-    text-align: center;
-    padding: 18px 12px 12px;
     background: #fff8e8;
-    border-bottom: 4px solid #c69c6d;
-    box-shadow: 0 3px 10px rgba(0,0,0,.18);
+    padding: 16px 10px 13px;
+    text-align: center;
+
+    border-bottom: 4px solid #b77a45;
+
+    box-shadow:
+        0 4px 12px rgba(0,0,0,.20);
+
+    position: relative;
+    z-index: 10;
 }
 
 h1 {
     margin: 0;
-    font-size: clamp(28px, 7vw, 48px);
-    color: #5c3b25;
+
+    font-size:
+        clamp(28px, 7vw, 48px);
+
+    color: #5a3820;
+
+    text-shadow:
+        1px 2px 0 #ead4a9;
 }
 
 .subtitle {
     margin-top: 5px;
-    font-size: clamp(14px, 3.5vw, 20px);
+
+    font-size:
+        clamp(14px, 3.5vw, 20px);
+
+    color: #6d4b32;
 }
 
 .scoreboard {
-    margin: 12px auto 0;
     display: flex;
+
     justify-content: center;
-    gap: 12px;
+
+    gap: 10px;
+
     flex-wrap: wrap;
+
+    margin-top: 12px;
 }
 
 .badge {
     background: white;
+
     padding: 8px 16px;
+
     border-radius: 20px;
-    box-shadow: 0 3px 7px rgba(0,0,0,.15);
+
     font-weight: bold;
+
+    box-shadow:
+        0 3px 8px rgba(0,0,0,.15);
 }
+
+/* =========================
+   REAL WOOD TABLE
+========================= */
 
 #game {
-    width: 100%;
     min-height: calc(100vh - 150px);
+
     padding: 18px;
+
     position: relative;
 
-    background:
-        radial-gradient(circle at 10% 20%, rgba(255,255,255,.08) 0 2px, transparent 3px),
-        radial-gradient(circle at 70% 60%, rgba(80,40,10,.08) 0 2px, transparent 3px),
-        linear-gradient(90deg,
-            rgba(90,45,15,.08) 0 2px,
-            transparent 2px 90px
+    background-color: #ad713e;
+
+    background-image:
+
+        linear-gradient(
+            90deg,
+            rgba(70,35,10,.08) 2px,
+            transparent 2px
         ),
-        #b77a45;
 
-    background-size: 120px 120px, 160px 160px, 100px 100%;
+        linear-gradient(
+            rgba(255,255,255,.04) 1px,
+            transparent 1px
+        );
+
+    background-size:
+        100px 100%,
+        100% 30px;
 }
 
-/* ---------- TARGET AREA ---------- */
+/* =========================
+   TITLES
+========================= */
 
-.targets-title {
+.section-title {
     text-align: center;
+
     color: white;
+
     font-size: 21px;
+
     font-weight: bold;
-    text-shadow: 0 2px 3px #553018;
-    margin-bottom: 10px;
+
+    text-shadow:
+        0 2px 3px #4d2a15;
+
+    margin: 5px 0 12px;
 }
+
+/* =========================
+   TARGETS
+========================= */
 
 .targets {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 10px;
     max-width: 1100px;
+
     margin: auto;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(5, 1fr);
+
+    gap: 10px;
 }
 
 .target {
     min-height: 115px;
-    background: rgba(255,248,225,.95);
-    border: 4px dashed #8b633e;
+
+    background:
+        rgba(255,249,229,.97);
+
+    border:
+        4px dashed #916b49;
+
     border-radius: 18px;
-    box-shadow:
-        inset 0 0 0 2px rgba(255,255,255,.7),
-        0 6px 12px rgba(50,25,5,.25);
 
     display: flex;
+
     flex-direction: column;
-    justify-content: center;
+
     align-items: center;
 
-    transition: transform .2s, background .2s, border .2s;
+    justify-content: center;
+
+    text-align: center;
+
+    box-shadow:
+        0 7px 12px rgba(50,25,5,.25),
+
+        inset
+        0 0 0 2px
+        rgba(255,255,255,.8);
+
+    transition:
+        .2s ease;
 }
 
 .target.active {
-    transform: scale(1.04);
-    background: #fff3a8;
-    border-color: #f2b705;
+    transform: scale(1.05);
+
+    background: #fff0a3;
+
+    border-color: #e7a900;
+
+    box-shadow:
+        0 10px 18px rgba(60,30,5,.3);
 }
 
 .target.completed {
-    background: #d9ffd8;
+    background: #dfffd9;
+
     border-color: #4caf50;
+
     border-style: solid;
 }
 
-.target .pair {
-    font-size: 13px;
-    opacity: .65;
+.pair {
+    font-size: 12px;
+
+    opacity: .55;
+
     margin-bottom: 4px;
 }
 
 .target-word {
-    font-size: clamp(17px, 3vw, 25px);
+    font-size:
+        clamp(17px, 3vw, 26px);
+
     font-weight: 900;
-    color: #5b3a22;
+
+    color: #58371f;
 }
 
 .target-slots {
-    margin-top: 5px;
     font-size: 12px;
+
+    margin-top: 5px;
+
     color: #777;
 }
 
-/* ---------- CARDS ---------- */
-
-.cards-title {
-    margin-top: 25px;
-    text-align: center;
-    color: white;
-    font-size: 21px;
-    font-weight: bold;
-    text-shadow: 0 2px 3px #553018;
-}
+/* =========================
+   CARDS
+========================= */
 
 .cards {
     max-width: 1100px;
-    margin: 12px auto 30px;
+
+    margin: 15px auto 30px;
 
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+
+    grid-template-columns:
+        repeat(5, 1fr);
+
     gap: 14px;
 }
 
 .card {
-    min-height: 145px;
-    background: #fffdf5;
+    background:
+        linear-gradient(
+            145deg,
+            #ffffff,
+            #f6f0dd
+        );
 
-    border-radius: 15px;
-    border: 2px solid #d5c8aa;
+    border:
+        2px solid #d4c6a5;
 
-    box-shadow:
-        0 8px 0 #8d5d38,
-        0 10px 18px rgba(45,25,10,.30);
+    border-radius: 16px;
+
+    min-height: 175px;
 
     display: flex;
+
     flex-direction: column;
-    align-items: center;
+
     justify-content: center;
 
+    align-items: center;
+
+    padding: 9px;
+
     cursor: grab;
+
     user-select: none;
+
     touch-action: none;
 
     position: relative;
 
-    transition: transform .15s, box-shadow .15s;
-}
+    box-shadow:
 
-.card::before {
-    content: "";
-    position: absolute;
-    width: 45px;
-    height: 45px;
-    border-radius: 50%;
-    background: rgba(255,255,255,.35);
-    top: 8px;
-    left: 10px;
+        0 7px 0 #86552f,
+
+        0 10px 16px
+        rgba(40,20,5,.30);
+
+    transition:
+        transform .18s ease,
+        box-shadow .18s ease;
 }
 
 .card:hover {
-    transform: translateY(-5px) rotate(-1deg);
+    transform:
+        translateY(-5px)
+        rotate(-1deg);
 }
 
 .card.dragging {
     cursor: grabbing;
-    transform: scale(1.08) rotate(3deg);
-    box-shadow: 0 18px 28px rgba(30,15,5,.4);
+
+    transform:
+        scale(1.08)
+        rotate(3deg);
+
+    box-shadow:
+        0 20px 30px
+        rgba(30,15,5,.4);
+
     z-index: 9999;
 }
 
 .card.correct {
-    animation: correct .6s ease;
-    background: #dfffdc;
+    animation:
+        correctAnimation .6s ease;
+
+    background:
+        #e2ffe0;
 }
 
 .card.wrong {
-    animation: wrong .4s ease;
+    animation:
+        wrongAnimation .4s ease;
 }
 
-.emoji {
-    font-size: 64px;
-    line-height: 1;
-    margin-bottom: 8px;
+/* =========================
+   REAL IMAGE
+========================= */
+
+.photo {
+    width: 100%;
+
+    height: 115px;
+
+    object-fit: cover;
+
+    border-radius: 11px;
+
     pointer-events: none;
+
+    box-shadow:
+        0 2px 5px
+        rgba(0,0,0,.20);
+
+    background: #ddd;
 }
 
 .card-label {
+    margin-top: 7px;
+
     font-size: 14px;
-    font-weight: bold;
-    color: #76543b;
-    pointer-events: none;
+
+    font-weight: 900;
+
+    letter-spacing: .5px;
+
+    color: #63432b;
 }
 
-/* ---------- BUTTON ---------- */
+/* =========================
+   BUTTON
+========================= */
 
 .controls {
     text-align: center;
+
     padding-bottom: 30px;
 }
 
 button {
     border: none;
-    background: #fff8d6;
-    color: #5b3a22;
-    font-size: 18px;
-    font-weight: bold;
-    padding: 12px 24px;
+
+    background: #fff5bd;
+
+    color: #56361f;
+
+    padding: 13px 25px;
+
     border-radius: 25px;
-    box-shadow: 0 5px 0 #8d5d38;
+
+    font-size: 18px;
+
+    font-weight: bold;
+
     cursor: pointer;
+
+    box-shadow:
+        0 5px 0 #80512f;
+
+    transition: .1s;
 }
 
 button:active {
     transform: translateY(4px);
-    box-shadow: 0 1px 0 #8d5d38;
+
+    box-shadow:
+        0 1px 0 #80512f;
 }
 
-/* ---------- MESSAGE ---------- */
+/* =========================
+   POPUP MESSAGE
+========================= */
 
 #message {
     position: fixed;
+
     left: 50%;
+
     top: 50%;
-    transform: translate(-50%, -50%) scale(.7);
 
-    background: white;
-    border-radius: 25px;
-    padding: 25px 35px;
-
-    text-align: center;
-    font-size: 25px;
-    font-weight: bold;
-
-    box-shadow: 0 15px 40px rgba(0,0,0,.35);
+    transform:
+        translate(-50%,-50%)
+        scale(.7);
 
     opacity: 0;
-    pointer-events: none;
-    transition: .25s;
 
-    z-index: 10000;
+    pointer-events: none;
+
+    background: white;
+
+    border-radius: 25px;
+
+    padding: 25px 35px;
+
+    font-size:
+        clamp(22px, 5vw, 34px);
+
+    font-weight: bold;
+
+    text-align: center;
+
+    box-shadow:
+        0 15px 45px
+        rgba(0,0,0,.35);
+
+    z-index: 20000;
+
+    transition: .25s ease;
 }
 
 #message.show {
     opacity: 1;
-    transform: translate(-50%, -50%) scale(1);
+
+    transform:
+        translate(-50%,-50%)
+        scale(1);
 }
 
-/* ---------- CONFETTI ---------- */
+/* =========================
+   CONFETTI
+========================= */
 
 .confetti {
     position: fixed;
+
     width: 10px;
+
     height: 18px;
-    z-index: 20000;
+
+    top: -20px;
+
+    z-index: 30000;
+
     pointer-events: none;
-    animation: fall 1.3s linear forwards;
+
+    animation:
+        fall 1.4s linear forwards;
 }
 
-@keyframes correct {
-    0% { transform: scale(1); }
-    40% { transform: scale(1.2) rotate(4deg); }
-    100% { transform: scale(1); }
+/* =========================
+   ANIMATIONS
+========================= */
+
+@keyframes correctAnimation {
+
+    0% {
+        transform: scale(1);
+    }
+
+    40% {
+        transform:
+            scale(1.18)
+            rotate(4deg);
+    }
+
+    100% {
+        transform: scale(1);
+    }
 }
 
-@keyframes wrong {
-    0%,100% { transform: translateX(0); }
-    25% { transform: translateX(-10px); }
-    75% { transform: translateX(10px); }
+@keyframes wrongAnimation {
+
+    0%,100% {
+        transform: translateX(0);
+    }
+
+    25% {
+        transform: translateX(-10px);
+    }
+
+    75% {
+        transform: translateX(10px);
+    }
 }
 
 @keyframes fall {
+
     from {
-        transform: translateY(-20px) rotate(0deg);
+        transform:
+            translateY(-20px)
+            rotate(0deg);
+
         opacity: 1;
     }
+
     to {
-        transform: translateY(100vh) rotate(720deg);
+        transform:
+            translateY(100vh)
+            rotate(720deg);
+
         opacity: 0;
     }
 }
 
-/* ---------- TABLET ---------- */
+/* =========================
+   TABLET
+========================= */
 
-@media (max-width: 800px) {
+@media (max-width: 850px) {
 
     .targets {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns:
+            repeat(2,1fr);
     }
 
     .cards {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    .target {
-        min-height: 95px;
-    }
-
-    .card {
-        min-height: 135px;
+        grid-template-columns:
+            repeat(2,1fr);
     }
 }
 
-/* ---------- PHONE ---------- */
+/* =========================
+   PHONE
+========================= */
 
 @media (max-width: 500px) {
 
@@ -347,232 +559,571 @@ button:active {
     }
 
     .targets {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns:
+            repeat(2,1fr);
+
         gap: 8px;
     }
 
     .cards {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns:
+            repeat(2,1fr);
+
         gap: 10px;
     }
 
     .card {
-        min-height: 125px;
+        min-height: 160px;
     }
 
-    .emoji {
-        font-size: 52px;
+    .photo {
+        height: 100px;
     }
 
     .target {
         min-height: 90px;
     }
 }
+
 </style>
 </head>
 
+
 <body>
+
+<!-- =========================
+     HEADER
+========================= -->
 
 <header>
 
-    <h1>🌈 Adjective Match!</h1>
+    <h1>
+        🌈 Adjective Match!
+    </h1>
 
     <div class="subtitle">
         Drag each picture to the correct adjective.
     </div>
 
     <div class="scoreboard">
+
         <div class="badge">
-            ⭐ Score: <span id="score">0</span>
+            ⭐ Score:
+            <span id="score">0</span>
         </div>
 
         <div class="badge">
-            🎯 <span id="progress">0</span> / 10
+            🎯
+            <span id="progress">0</span>
+            / 10
         </div>
+
     </div>
 
 </header>
 
 
+<!-- =========================
+     GAME TABLE
+========================= -->
+
 <main id="game">
 
-    <div class="targets-title">
+    <div class="section-title">
         🧠 Match the pictures with the adjectives!
     </div>
 
+
+    <!-- TARGETS -->
+
     <section class="targets">
 
-        <div class="target" data-adjective="big">
-            <div class="pair">BIG / SMALL</div>
-            <div class="target-word">BIG</div>
-            <div class="target-slots">Drop here</div>
+        <div class="target"
+             data-adjective="big">
+
+            <div class="pair">
+                BIG / SMALL
+            </div>
+
+            <div class="target-word">
+                BIG
+            </div>
+
+            <div class="target-slots">
+                Drop here
+            </div>
+
         </div>
 
-        <div class="target" data-adjective="small">
-            <div class="pair">BIG / SMALL</div>
-            <div class="target-word">SMALL</div>
-            <div class="target-slots">Drop here</div>
+
+        <div class="target"
+             data-adjective="small">
+
+            <div class="pair">
+                BIG / SMALL
+            </div>
+
+            <div class="target-word">
+                SMALL
+            </div>
+
+            <div class="target-slots">
+                Drop here
+            </div>
+
         </div>
 
-        <div class="target" data-adjective="fast">
-            <div class="pair">FAST / SLOW</div>
-            <div class="target-word">FAST</div>
-            <div class="target-slots">Drop here</div>
+
+        <div class="target"
+             data-adjective="fast">
+
+            <div class="pair">
+                FAST / SLOW
+            </div>
+
+            <div class="target-word">
+                FAST
+            </div>
+
+            <div class="target-slots">
+                Drop here
+            </div>
+
         </div>
 
-        <div class="target" data-adjective="slow">
-            <div class="pair">FAST / SLOW</div>
-            <div class="target-word">SLOW</div>
-            <div class="target-slots">Drop here</div>
+
+        <div class="target"
+             data-adjective="slow">
+
+            <div class="pair">
+                FAST / SLOW
+            </div>
+
+            <div class="target-word">
+                SLOW
+            </div>
+
+            <div class="target-slots">
+                Drop here
+            </div>
+
         </div>
 
-        <div class="target" data-adjective="tall">
-            <div class="pair">TALL / SHORT</div>
-            <div class="target-word">TALL</div>
-            <div class="target-slots">Drop here</div>
+
+        <div class="target"
+             data-adjective="tall">
+
+            <div class="pair">
+                TALL / SHORT
+            </div>
+
+            <div class="target-word">
+                TALL
+            </div>
+
+            <div class="target-slots">
+                Drop here
+            </div>
+
         </div>
 
-        <div class="target" data-adjective="short">
-            <div class="pair">TALL / SHORT</div>
-            <div class="target-word">SHORT</div>
-            <div class="target-slots">Drop here</div>
+
+        <div class="target"
+             data-adjective="short">
+
+            <div class="pair">
+                TALL / SHORT
+            </div>
+
+            <div class="target-word">
+                SHORT
+            </div>
+
+            <div class="target-slots">
+                Drop here
+            </div>
+
         </div>
 
-        <div class="target" data-adjective="happy">
-            <div class="pair">HAPPY / SAD</div>
-            <div class="target-word">HAPPY</div>
-            <div class="target-slots">Drop here</div>
+
+        <div class="target"
+             data-adjective="happy">
+
+            <div class="pair">
+                HAPPY / SAD
+            </div>
+
+            <div class="target-word">
+                HAPPY
+            </div>
+
+            <div class="target-slots">
+                Drop here
+            </div>
+
         </div>
 
-        <div class="target" data-adjective="sad">
-            <div class="pair">HAPPY / SAD</div>
-            <div class="target-word">SAD</div>
-            <div class="target-slots">Drop here</div>
+
+        <div class="target"
+             data-adjective="sad">
+
+            <div class="pair">
+                HAPPY / SAD
+            </div>
+
+            <div class="target-word">
+                SAD
+            </div>
+
+            <div class="target-slots">
+                Drop here
+            </div>
+
         </div>
 
-        <div class="target" data-adjective="hot">
-            <div class="pair">HOT / COLD</div>
-            <div class="target-word">HOT</div>
-            <div class="target-slots">Drop here</div>
+
+        <div class="target"
+             data-adjective="hot">
+
+            <div class="pair">
+                HOT / COLD
+            </div>
+
+            <div class="target-word">
+                HOT
+            </div>
+
+            <div class="target-slots">
+                Drop here
+            </div>
+
         </div>
 
-        <div class="target" data-adjective="cold">
-            <div class="pair">HOT / COLD</div>
-            <div class="target-word">COLD</div>
-            <div class="target-slots">Drop here</div>
+
+        <div class="target"
+             data-adjective="cold">
+
+            <div class="pair">
+                HOT / COLD
+            </div>
+
+            <div class="target-word">
+                COLD
+            </div>
+
+            <div class="target-slots">
+                Drop here
+            </div>
+
         </div>
 
     </section>
 
 
-    <div class="cards-title">
-        🃏 Pick up a card and drag it to the right place!
+    <!-- =========================
+         CARDS
+    ========================= -->
+
+    <div class="section-title"
+         style="margin-top:25px;">
+
+        🃏 Pick up a card and drag it!
+
     </div>
 
-    <section class="cards" id="cards">
 
-        <div class="card" data-answer="big">
-            <div class="emoji">🐘</div>
-            <div class="card-label">ELEPHANT</div>
+    <section class="cards"
+             id="cards">
+
+
+        <!-- ELEPHANT -->
+
+        <div class="card"
+             data-answer="big"
+             data-word="Elephant">
+
+            <img
+                class="photo"
+                src="https://loremflickr.com/500/350/elephant"
+                alt="Elephant">
+
+            <div class="card-label">
+                ELEPHANT
+            </div>
+
         </div>
 
-        <div class="card" data-answer="small">
-            <div class="emoji">🐭</div>
-            <div class="card-label">MOUSE</div>
+
+        <!-- MOUSE -->
+
+        <div class="card"
+             data-answer="small"
+             data-word="Mouse">
+
+            <img
+                class="photo"
+                src="https://loremflickr.com/500/350/mouse"
+                alt="Mouse">
+
+            <div class="card-label">
+                MOUSE
+            </div>
+
         </div>
 
-        <div class="card" data-answer="fast">
-            <div class="emoji">🐆</div>
-            <div class="card-label">CHEETAH</div>
+
+        <!-- CHEETAH -->
+
+        <div class="card"
+             data-answer="fast"
+             data-word="Cheetah">
+
+            <img
+                class="photo"
+                src="https://loremflickr.com/500/350/cheetah"
+                alt="Cheetah">
+
+            <div class="card-label">
+                CHEETAH
+            </div>
+
         </div>
 
-        <div class="card" data-answer="slow">
-            <div class="emoji">🐢</div>
-            <div class="card-label">TURTLE</div>
+
+        <!-- TURTLE -->
+
+        <div class="card"
+             data-answer="slow"
+             data-word="Turtle">
+
+            <img
+                class="photo"
+                src="https://loremflickr.com/500/350/turtle"
+                alt="Turtle">
+
+            <div class="card-label">
+                TURTLE
+            </div>
+
         </div>
 
-        <div class="card" data-answer="tall">
-            <div class="emoji">🌳</div>
-            <div class="card-label">TREE</div>
+
+        <!-- TREE -->
+
+        <div class="card"
+             data-answer="tall"
+             data-word="Tree">
+
+            <img
+                class="photo"
+                src="https://loremflickr.com/500/350/tall/tree"
+                alt="Tall tree">
+
+            <div class="card-label">
+                TREE
+            </div>
+
         </div>
 
-        <div class="card" data-answer="short">
-            <div class="emoji">🌱</div>
-            <div class="card-label">PLANT</div>
+
+        <!-- FLOWER -->
+
+        <div class="card"
+             data-answer="short"
+             data-word="Flower">
+
+            <img
+                class="photo"
+                src="https://loremflickr.com/500/350/short,flower"
+                alt="Short flower">
+
+            <div class="card-label">
+                FLOWER
+            </div>
+
         </div>
 
-        <div class="card" data-answer="happy">
-            <div class="emoji">😀</div>
-            <div class="card-label">HAPPY</div>
+
+        <!-- HAPPY -->
+
+        <div class="card"
+             data-answer="happy"
+             data-word="Happy">
+
+            <img
+                class="photo"
+                src="https://loremflickr.com/500/350/happy,child"
+                alt="Happy child">
+
+            <div class="card-label">
+                HAPPY
+            </div>
+
         </div>
 
-        <div class="card" data-answer="sad">
-            <div class="emoji">😢</div>
-            <div class="card-label">SAD</div>
+
+        <!-- SAD -->
+
+        <div class="card"
+             data-answer="sad"
+             data-word="Sad">
+
+            <img
+                class="photo"
+                src="https://loremflickr.com/500/350/sad,child"
+                alt="Sad child">
+
+            <div class="card-label">
+                SAD
+            </div>
+
         </div>
 
-        <div class="card" data-answer="hot">
-            <div class="emoji">☀️</div>
-            <div class="card-label">HOT</div>
+
+        <!-- HOT -->
+
+        <div class="card"
+             data-answer="hot"
+             data-word="Hot">
+
+            <img
+                class="photo"
+                src="https://loremflickr.com/500/350/hot,sun"
+                alt="Hot sunny day">
+
+            <div class="card-label">
+                HOT
+            </div>
+
         </div>
 
-        <div class="card" data-answer="cold">
-            <div class="emoji">❄️</div>
-            <div class="card-label">COLD</div>
+
+        <!-- COLD -->
+
+        <div class="card"
+             data-answer="cold"
+             data-word="Cold">
+
+            <img
+                class="photo"
+                src="https://loremflickr.com/500/350/cold,snow"
+                alt="Cold snowy day">
+
+            <div class="card-label">
+                COLD
+            </div>
+
         </div>
+
 
     </section>
 
 
     <div class="controls">
+
         <button onclick="resetGame()">
             🔄 Play Again
         </button>
+
     </div>
 
 </main>
 
+
+<!-- POPUP -->
 
 <div id="message"></div>
 
 
 <script>
 
+/* =================================================
+   VARIABLES
+================================================= */
+
 let score = 0;
+
 let completed = 0;
 
 let draggedCard = null;
+
 let offsetX = 0;
+
 let offsetY = 0;
 
-const cards = document.querySelectorAll(".card");
-const targets = document.querySelectorAll(".target");
 
-const scoreElement = document.getElementById("score");
-const progressElement = document.getElementById("progress");
-const message = document.getElementById("message");
+const cards =
+    document.querySelectorAll(".card");
+
+const targets =
+    document.querySelectorAll(".target");
+
+const scoreElement =
+    document.getElementById("score");
+
+const progressElement =
+    document.getElementById("progress");
+
+const message =
+    document.getElementById("message");
 
 
-/* --------------------------------------------------
-   SOUND
--------------------------------------------------- */
+/* =================================================
+   VOICE
+================================================= */
 
-function sound(type) {
+function speak(text) {
+
+    if (!("speechSynthesis" in window)) {
+        return;
+    }
+
+    window.speechSynthesis.cancel();
+
+    const voice =
+        new SpeechSynthesisUtterance(text);
+
+    voice.lang = "en-US";
+
+    voice.rate = 0.85;
+
+    voice.pitch = 1.15;
+
+    voice.volume = 1;
+
+    window.speechSynthesis.speak(voice);
+}
+
+
+/* =================================================
+   SOUND EFFECT
+================================================= */
+
+function playSound(type) {
 
     try {
 
         const AudioContext =
-            window.AudioContext || window.webkitAudioContext;
+            window.AudioContext ||
+            window.webkitAudioContext;
 
-        const audio = new AudioContext();
+        const audio =
+            new AudioContext();
 
-        const oscillator = audio.createOscillator();
-        const gain = audio.createGain();
+        const oscillator =
+            audio.createOscillator();
+
+        const gain =
+            audio.createGain();
 
         oscillator.connect(gain);
+
         gain.connect(audio.destination);
 
+
         if (type === "correct") {
+
+            oscillator.type = "sine";
 
             oscillator.frequency.setValueAtTime(
                 600,
@@ -584,7 +1135,12 @@ function sound(type) {
                 audio.currentTime + .15
             );
 
-        } else {
+        }
+
+
+        if (type === "wrong") {
+
+            oscillator.type = "sawtooth";
 
             oscillator.frequency.setValueAtTime(
                 180,
@@ -593,9 +1149,28 @@ function sound(type) {
 
             oscillator.frequency.exponentialRampToValueAtTime(
                 100,
-                audio.currentTime + .18
+                audio.currentTime + .2
             );
+
         }
+
+
+        if (type === "card") {
+
+            oscillator.type = "triangle";
+
+            oscillator.frequency.setValueAtTime(
+                250,
+                audio.currentTime
+            );
+
+            oscillator.frequency.exponentialRampToValueAtTime(
+                400,
+                audio.currentTime + .08
+            );
+
+        }
+
 
         gain.gain.setValueAtTime(
             .08,
@@ -608,357 +1183,90 @@ function sound(type) {
         );
 
         oscillator.start();
-        oscillator.stop(audio.currentTime + .25);
 
-    } catch(e) {}
+        oscillator.stop(
+            audio.currentTime + .25
+        );
+
+    }
+
+    catch(error) {}
 
 }
 
 
-/* --------------------------------------------------
+/* =================================================
    MESSAGE
--------------------------------------------------- */
+================================================= */
 
-function showMessage(text, duration = 900) {
+function showMessage(
+    text,
+    duration = 900
+) {
 
     message.textContent = text;
+
     message.classList.add("show");
 
     setTimeout(() => {
+
         message.classList.remove("show");
+
     }, duration);
 
 }
 
 
-/* --------------------------------------------------
+/* =================================================
    CONFETTI
--------------------------------------------------- */
+================================================= */
 
 function celebrate() {
 
-    for(let i = 0; i < 25; i++) {
+    for (
+        let i = 0;
+        i < 35;
+        i++
+    ) {
 
-        const piece = document.createElement("div");
+        const piece =
+            document.createElement("div");
 
-        piece.className = "confetti";
+        piece.className =
+            "confetti";
 
         piece.style.left =
-            Math.random() * window.innerWidth + "px";
-
-        piece.style.top = "-20px";
+            Math.random() *
+            window.innerWidth +
+            "px";
 
         piece.style.background =
-            `hsl(${Math.random() * 360}, 80%, 60%)`;
+            `hsl(${Math.random()*360},
+            80%,
+            60%)`;
 
         piece.style.animationDuration =
-            (0.8 + Math.random() * 1.2) + "s";
+            (0.8 +
+            Math.random() * 1.2) +
+            "s";
 
         document.body.appendChild(piece);
 
         setTimeout(() => {
+
             piece.remove();
-        }, 2000);
-    }
 
-}
-
-
-/* --------------------------------------------------
-   POINTER DRAGGING
--------------------------------------------------- */
-
-cards.forEach(card => {
-
-    card.addEventListener("pointerdown", startDrag);
-
-});
-
-
-function startDrag(event) {
-
-    if(this.classList.contains("correct")) return;
-
-    draggedCard = this;
-
-    draggedCard.classList.add("dragging");
-
-    const rect = draggedCard.getBoundingClientRect();
-
-    offsetX = event.clientX - rect.left;
-    offsetY = event.clientY - rect.top;
-
-    draggedCard.style.position = "fixed";
-
-    draggedCard.style.width = rect.width + "px";
-
-    draggedCard.style.left =
-        (event.clientX - offsetX) + "px";
-
-    draggedCard.style.top =
-        (event.clientY - offsetY) + "px";
-
-    draggedCard.setPointerCapture(event.pointerId);
-
-    draggedCard.addEventListener(
-        "pointermove",
-        dragMove
-    );
-
-    draggedCard.addEventListener(
-        "pointerup",
-        endDrag,
-        { once:true }
-    );
-
-}
-
-
-function dragMove(event) {
-
-    if(!draggedCard) return;
-
-    draggedCard.style.left =
-        (event.clientX - offsetX) + "px";
-
-    draggedCard.style.top =
-        (event.clientY - offsetY) + "px";
-
-    targets.forEach(target => {
-
-        const rect = target.getBoundingClientRect();
-
-        const inside =
-            event.clientX >= rect.left &&
-            event.clientX <= rect.right &&
-            event.clientY >= rect.top &&
-            event.clientY <= rect.bottom;
-
-        target.classList.toggle(
-            "active",
-            inside
-        );
-
-    });
-
-}
-
-
-function endDrag(event) {
-
-    if(!draggedCard) return;
-
-    const card = draggedCard;
-
-    card.removeEventListener(
-        "pointermove",
-        dragMove
-    );
-
-    const cardRect =
-        card.getBoundingClientRect();
-
-    const centerX =
-        cardRect.left + cardRect.width / 2;
-
-    const centerY =
-        cardRect.top + cardRect.height / 2;
-
-    let matchedTarget = null;
-
-    targets.forEach(target => {
-
-        const rect =
-            target.getBoundingClientRect();
-
-        const inside =
-            centerX >= rect.left &&
-            centerX <= rect.right &&
-            centerY >= rect.top &&
-            centerY <= rect.bottom;
-
-        if(inside) {
-            matchedTarget = target;
-        }
-
-        target.classList.remove("active");
-
-    });
-
-
-    if(matchedTarget) {
-
-        const answer =
-            card.dataset.answer;
-
-        const correct =
-            matchedTarget.dataset.adjective;
-
-        if(answer === correct) {
-
-            handleCorrect(card, matchedTarget);
-
-        } else {
-
-            handleWrong(card);
-
-        }
-
-    } else {
-
-        returnCard(card);
+        }, 2200);
 
     }
 
-    draggedCard = null;
-
 }
 
 
-/* --------------------------------------------------
-   CORRECT ANSWER
--------------------------------------------------- */
-
-function handleCorrect(card, target) {
-
-    score += 10;
-    completed++;
-
-    scoreElement.textContent = score;
-    progressElement.textContent = completed;
-
-    card.classList.remove("dragging");
-    card.classList.add("correct");
-
-    target.classList.add("completed");
-
-    sound("correct");
-
-    showMessage("🎉 Great job!");
-
-    celebrate();
-
-    setTimeout(() => {
-
-        card.style.position = "relative";
-        card.style.left = "";
-        card.style.top = "";
-        card.style.width = "";
-
-        target.querySelector(".target-slots").textContent =
-            "✓ Correct!";
-
-        if(completed === 10) {
-
-            setTimeout(() => {
-
-                showMessage(
-                    "🏆 AMAZING! You matched them all!",
-                    2500
-                );
-
-            }, 600);
-
-        }
-
-    }, 400);
-
-}
-
-
-/* --------------------------------------------------
-   WRONG ANSWER
--------------------------------------------------- */
-
-function handleWrong(card) {
-
-    card.classList.remove("dragging");
-
-    card.classList.add("wrong");
-
-    sound("wrong");
-
-    showMessage("💭 Try again!");
-
-    setTimeout(() => {
-
-        card.classList.remove("wrong");
-
-        returnCard(card);
-
-    }, 450);
-
-}
-
-
-/* --------------------------------------------------
-   RETURN CARD
--------------------------------------------------- */
-
-function returnCard(card) {
-
-    card.style.position = "relative";
-    card.style.left = "";
-    card.style.top = "";
-    card.style.width = "";
-
-    card.classList.remove("dragging");
-
-}
-
-
-/* --------------------------------------------------
-   RESET
--------------------------------------------------- */
-
-function resetGame() {
-
-    score = 0;
-    completed = 0;
-
-    scoreElement.textContent = "0";
-    progressElement.textContent = "0";
-
-    cards.forEach(card => {
-
-        card.classList.remove("correct");
-        card.classList.remove("wrong");
-        card.classList.remove("dragging");
-
-        card.style.position = "relative";
-        card.style.left = "";
-        card.style.top = "";
-        card.style.width = "";
-
-    });
-
-    targets.forEach(target => {
-
-        target.classList.remove("completed");
-        target.classList.remove("active");
-
-        target.querySelector(".target-slots").textContent =
-            "Drop here";
-
-    });
-
-}
-
-
-/* --------------------------------------------------
-   PREVENT LONG PRESS MENU ON CARDS
--------------------------------------------------- */
+/* =================================================
+   CARD TOUCH
+================================================= */
 
 cards.forEach(card => {
 
-    card.addEventListener(
-        "contextmenu",
-        event => event.preventDefault()
-    );
-
-});
-
-</script>
-
-</body>
-  </html>
+    card.addEve
