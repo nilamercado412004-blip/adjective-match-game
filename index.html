@@ -1,17 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
 <meta charset="UTF-8">
-
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0">
-
-<title>Adjective Match Table</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Adjective Match!</title>
 
 <style>
-
 *{
     box-sizing:border-box;
     -webkit-tap-highlight-color:transparent;
@@ -25,49 +19,43 @@ body{
     overflow-x:hidden;
 }
 
-/* HEADER */
-
 header{
     background:#fff8e8;
     text-align:center;
-    padding:16px 10px;
-    border-bottom:4px solid #9a6236;
+    padding:15px 10px;
+    border-bottom:4px solid #8f5a31;
     box-shadow:0 4px 12px rgba(0,0,0,.2);
 }
 
 h1{
     margin:0;
-    font-size:clamp(28px,7vw,46px);
+    font-size:clamp(28px,7vw,45px);
 }
 
 .subtitle{
-    margin-top:5px;
+    margin:5px 0 10px;
     font-size:18px;
 }
 
 .score{
-    margin-top:10px;
     display:flex;
     justify-content:center;
-    gap:12px;
+    gap:10px;
     flex-wrap:wrap;
 }
 
 .badge{
     background:white;
-    padding:8px 18px;
+    padding:8px 17px;
     border-radius:20px;
     font-weight:bold;
     box-shadow:0 3px 8px rgba(0,0,0,.15);
 }
 
-/* TABLE */
-
 #table{
-    position:relative;
-    min-height:calc(100vh - 140px);
-    padding:25px;
-    background-color:#ad713e;
+    min-height:100vh;
+    padding:20px;
+    background:#ad713e;
 
     background-image:
     repeating-linear-gradient(
@@ -79,27 +67,21 @@ h1{
     );
 }
 
-/* TITLE */
-
 .section-title{
     text-align:center;
     color:white;
-    font-size:22px;
+    font-size:23px;
     font-weight:bold;
     text-shadow:0 2px 3px #43230f;
-    margin-bottom:15px;
+    margin-bottom:14px;
 }
-
-/* BOARD */
 
 .board{
     position:relative;
     max-width:1150px;
     margin:auto;
-    min-height:620px;
+    min-height:1200px;
 }
-
-/* SVG LINES */
 
 #connections{
     position:absolute;
@@ -107,17 +89,19 @@ h1{
     width:100%;
     height:100%;
     pointer-events:none;
-    z-index:1;
+    z-index:2;
 }
 
 .connection{
-    stroke:#5f3bff;
+    stroke:#6845e8;
     stroke-width:5;
     stroke-linecap:round;
     fill:none;
     filter:drop-shadow(0 2px 2px rgba(0,0,0,.25));
-    stroke-dasharray:400;
-    stroke-dashoffset:400;
+
+    stroke-dasharray:800;
+    stroke-dashoffset:800;
+
     animation:drawLine .6s ease forwards;
 }
 
@@ -127,13 +111,11 @@ h1{
     }
 }
 
-/* COLUMNS */
-
 .flashcards,
 .adjectives{
     position:absolute;
     top:0;
-    width:270px;
+    width:285px;
     z-index:5;
 }
 
@@ -145,24 +127,23 @@ h1{
     right:0;
 }
 
-/* LABEL */
-
 .column-title{
     text-align:center;
     background:#fff6d5;
-    padding:9px;
+    padding:10px;
     border-radius:18px;
     font-weight:bold;
     margin-bottom:12px;
     box-shadow:0 4px 8px rgba(0,0,0,.2);
 }
 
-/* FLASHCARD */
+/* FLASHCARDS */
 
 .card{
-    width:240px;
-    height:135px;
-    margin:0 auto 13px;
+    width:260px;
+    height:105px;
+
+    margin:0 auto 14px;
 
     background:#fffdf5;
 
@@ -173,8 +154,8 @@ h1{
     padding:7px;
 
     box-shadow:
-        0 7px 0 #80502e,
-        0 10px 16px rgba(40,20,5,.3);
+        0 6px 0 #80502e,
+        0 10px 15px rgba(40,20,5,.3);
 
     cursor:grab;
 
@@ -183,6 +164,7 @@ h1{
 
     display:flex;
     align-items:center;
+
     gap:10px;
 
     position:relative;
@@ -191,27 +173,36 @@ h1{
 }
 
 .card:hover{
-    transform:translateY(-4px) rotate(-1deg);
+    transform:translateY(-3px) rotate(-1deg);
 }
 
 .card.dragging{
     position:fixed;
     z-index:10000;
-    transform:scale(1.08) rotate(3deg);
-    box-shadow:0 20px 30px rgba(0,0,0,.4);
+
+    transform:
+        scale(1.08)
+        rotate(3deg);
+
+    box-shadow:
+        0 20px 30px rgba(0,0,0,.4);
 }
 
 .card.matched{
-    opacity:.65;
+    opacity:.62;
     cursor:default;
 }
 
 .photo{
-    width:120px;
-    height:100px;
+    width:125px;
+    height:87px;
+
     object-fit:cover;
+
     border-radius:9px;
+
     background:#ddd;
+
     pointer-events:none;
 }
 
@@ -219,14 +210,16 @@ h1{
     font-weight:bold;
     font-size:15px;
     text-align:center;
+    flex:1;
 }
 
-/* ADJECTIVE */
+/* ADJECTIVES */
 
 .adjective{
-    width:230px;
-    height:95px;
-    margin:0 auto 53px;
+    width:245px;
+    height:75px;
+
+    margin:0 auto 44px;
 
     background:#fff8df;
 
@@ -246,8 +239,6 @@ h1{
         0 6px 12px rgba(0,0,0,.25);
 
     transition:.2s;
-
-    position:relative;
 }
 
 .adjective.active{
@@ -262,24 +253,17 @@ h1{
     border-style:solid;
 }
 
-.adjective.correct-pulse{
-    animation:pulse .5s ease;
-}
-
-@keyframes pulse{
-    50%{
-        transform:scale(1.12);
-    }
-}
-
-/* POPUP */
+/* MESSAGE */
 
 #message{
     position:fixed;
+
     left:50%;
     top:50%;
 
-    transform:translate(-50%,-50%) scale(.7);
+    transform:
+        translate(-50%,-50%)
+        scale(.7);
 
     opacity:0;
 
@@ -287,7 +271,7 @@ h1{
 
     background:white;
 
-    padding:25px 35px;
+    padding:24px 34px;
 
     border-radius:25px;
 
@@ -296,7 +280,8 @@ h1{
 
     text-align:center;
 
-    box-shadow:0 15px 40px rgba(0,0,0,.35);
+    box-shadow:
+        0 15px 40px rgba(0,0,0,.35);
 
     z-index:20000;
 
@@ -305,46 +290,67 @@ h1{
 
 #message.show{
     opacity:1;
-    transform:translate(-50%,-50%) scale(1);
+
+    transform:
+        translate(-50%,-50%)
+        scale(1);
 }
 
 /* BUTTON */
 
 .controls{
     text-align:center;
-    margin-top:20px;
+    margin-top:15px;
 }
 
 button{
-    border:none;
+    border:0;
+
     background:#fff4b5;
+
     padding:13px 25px;
+
     border-radius:25px;
+
     font-size:18px;
     font-weight:bold;
+
     color:#55331c;
-    box-shadow:0 5px 0 #80502e;
+
+    box-shadow:
+        0 5px 0 #80502e;
 }
 
 button:active{
     transform:translateY(4px);
-    box-shadow:0 1px 0 #80502e;
+
+    box-shadow:
+        0 1px 0 #80502e;
 }
 
 /* CONFETTI */
 
 .confetti{
     position:fixed;
+
     width:10px;
     height:18px;
+
     top:-20px;
+
     z-index:30000;
-    animation:fall 1.3s linear forwards;
+
+    animation:
+        fall 1.3s linear forwards;
 }
 
 @keyframes fall{
+
     to{
-        transform:translateY(100vh) rotate(720deg);
+        transform:
+            translateY(100vh)
+            rotate(720deg);
+
         opacity:0;
     }
 }
@@ -354,34 +360,26 @@ button:active{
 @media(max-width:800px){
 
     #table{
-        padding:12px;
+        padding:10px;
     }
 
     .board{
-        min-height:950px;
+        min-height:1200px;
     }
 
     .flashcards,
     .adjectives{
-        width:48%;
-    }
-
-    .flashcards{
-        left:0;
-    }
-
-    .adjectives{
-        right:0;
+        width:47%;
     }
 
     .card{
         width:100%;
-        height:115px;
+        height:100px;
     }
 
     .photo{
-        width:75px;
-        height:85px;
+        width:65px;
+        height:82px;
     }
 
     .card-name{
@@ -390,36 +388,34 @@ button:active{
 
     .adjective{
         width:100%;
-        height:75px;
-        margin-bottom:73px;
+        height:70px;
+        margin-bottom:49px;
         font-size:21px;
     }
-
 }
-
 </style>
-
 </head>
 
 <body>
-
 
 <header>
 
 <h1>🌈 Adjective Match!</h1>
 
 <div class="subtitle">
-Drag the flashcards to the correct adjective.
+Drag the real flashcards to the correct adjective.
 </div>
 
 <div class="score">
 
 <div class="badge">
-⭐ Score: <span id="score">0</span>
+⭐ Score:
+<span id="score">0</span>
 </div>
 
 <div class="badge">
-🎯 <span id="progress">0</span> / 10
+🎯
+<span id="progress">0</span> / 10
 </div>
 
 </div>
@@ -439,7 +435,9 @@ Drag the flashcards to the correct adjective.
 <svg id="connections"></svg>
 
 
-<!-- FLASHCARDS -->
+<!-- =========================
+     FLASHCARDS
+========================= -->
 
 <div class="flashcards">
 
@@ -448,11 +446,14 @@ Drag the flashcards to the correct adjective.
 </div>
 
 
-<div class="card"
-data-answer="big"
-data-search="African_bush_elephant">
+<!-- ELEPHANT -->
 
-<img class="photo">
+<div class="card"
+data-answer="big">
+
+<img
+class="photo"
+src="African_bush_elephant_(Loxodonta_africana),_Masai_Mara.jpg">
 
 <div class="card-name">
 ELEPHANT
@@ -461,11 +462,14 @@ ELEPHANT
 </div>
 
 
-<div class="card"
-data-answer="small"
-data-search="fe4db989">
+<!-- MOUSE -->
 
-<img class="photo">
+<div class="card"
+data-answer="small">
+
+<img
+class="photo"
+src="fe4db989-1055-45aa-99b9-7e57bf9dd858.png">
 
 <div class="card-name">
 MOUSE
@@ -474,11 +478,14 @@ MOUSE
 </div>
 
 
-<div class="card"
-data-answer="fast"
-data-search="Cheetah_walking">
+<!-- CHEETAH -->
 
-<img class="photo">
+<div class="card"
+data-answer="fast">
+
+<img
+class="photo"
+src="Cheetah_walking_and_looking_at_the_camera.jpg">
 
 <div class="card-name">
 CHEETAH
@@ -487,11 +494,14 @@ CHEETAH
 </div>
 
 
-<div class="card"
-data-answer="slow"
-data-search="Terrapene_carolina">
+<!-- TURTLE -->
 
-<img class="photo">
+<div class="card"
+data-answer="slow">
+
+<img
+class="photo"
+src="Terrapene_carolina_ssp._carolina_-_Eastern_Box_Turtle_(6-01-23)_01.jpg">
 
 <div class="card-name">
 TURTLE
@@ -500,11 +510,14 @@ TURTLE
 </div>
 
 
-<div class="card"
-data-answer="tall"
-data-search="Palm">
+<!-- TALL -->
 
-<img class="photo">
+<div class="card"
+data-answer="tall">
+
+<img
+class="photo"
+src="Palm+tree.jpg">
 
 <div class="card-name">
 TALL TREE
@@ -513,11 +526,14 @@ TALL TREE
 </div>
 
 
-<div class="card"
-data-answer="short"
-data-search="cd86cf7e">
+<!-- SHORT -->
 
-<img class="photo">
+<div class="card"
+data-answer="short">
+
+<img
+class="photo"
+src="cd86cf7e-ea58-4470-90b8-800e75aae6c9.png">
 
 <div class="card-name">
 SHORT
@@ -526,11 +542,14 @@ SHORT
 </div>
 
 
-<div class="card"
-data-answer="happy"
-data-search="Happy_Child">
+<!-- HAPPY -->
 
-<img class="photo">
+<div class="card"
+data-answer="happy">
+
+<img
+class="photo"
+src="Happy_Child_(Unsplash).jpg">
 
 <div class="card-name">
 HAPPY
@@ -539,11 +558,14 @@ HAPPY
 </div>
 
 
-<div class="card"
-data-answer="sad"
-data-search="Malachite_cat">
+<!-- SAD -->
 
-<img class="photo">
+<div class="card"
+data-answer="sad">
+
+<img
+class="photo"
+src="Malachite_cat_(MalKat),_sad.png">
 
 <div class="card-name">
 SAD
@@ -552,11 +574,14 @@ SAD
 </div>
 
 
-<div class="card"
-data-answer="hot"
-data-search="Mm00a">
+<!-- HOT -->
 
-<img class="photo">
+<div class="card"
+data-answer="hot">
+
+<img
+class="photo"
+src="Mm00a_1406_Sunset_5km_(73504651).jpeg">
 
 <div class="card-name">
 HOT
@@ -565,11 +590,14 @@ HOT
 </div>
 
 
-<div class="card"
-data-answer="cold"
-data-search="Fir_trees">
+<!-- COLD -->
 
-<img class="photo">
+<div class="card"
+data-answer="cold">
+
+<img
+class="photo"
+src="Fir_trees_in_the_cold_snow_(Unsplash).jpg">
 
 <div class="card-name">
 COLD
@@ -580,7 +608,9 @@ COLD
 </div>
 
 
-<!-- ADJECTIVES -->
+<!-- =========================
+     ADJECTIVES
+========================= -->
 
 <div class="adjectives">
 
@@ -660,108 +690,15 @@ COLD
 
 <script>
 
-/* ==================================================
-   IMPORTANT:
-   AUTOMATICALLY FIND YOUR IMAGES
-================================================== */
-
-const imageFiles = [
-"African_bush_elephant",
-"fe4db989",
-"Cheetah_walking",
-"Terrapene_carolina",
-"Palm",
-"cd86cf7e",
-"Happy_Child",
-"Malachite_cat",
-"Mm00a",
-"Fir_trees"
-];
-
-
-/*
-GitHub doesn't let JavaScript directly
-list files in a repository.
-
-So we use the GitHub API to read the
-repository contents automatically.
-*/
-
-async function loadImages(){
-
-    const path = window.location.pathname;
-
-    const parts = path.split("/");
-
-    const user = parts[1];
-
-    const repo = parts[2];
-
-    const api =
-    `https://api.github.com/repos/${user}/${repo}/contents/`;
-
-    try{
-
-        const response =
-            await fetch(api);
-
-        const files =
-            await response.json();
-
-
-        document
-        .querySelectorAll(".card")
-        .forEach(card => {
-
-            const search =
-                card.dataset.search
-                .toLowerCase();
-
-
-            const match =
-                files.find(file =>
-                    file.name
-                    .toLowerCase()
-                    .includes(search)
-                );
-
-
-            if(match){
-
-                card.querySelector(".photo").src =
-                    match.download_url;
-
-            }
-
-        });
-
-    }
-
-    catch(error){
-
-        console.log(
-            "Could not automatically load images."
-        );
-
-    }
-
-}
-
-
-/* LOAD PHOTOS */
-
-loadImages();
-
-
-/* ==================================================
-   VARIABLES
-================================================== */
+/* =========================
+   GAME VARIABLES
+========================= */
 
 let score = 0;
 
 let completed = 0;
 
-let draggedCard = null;
+let dragged = null;
 
 let offsetX = 0;
 
@@ -778,9 +715,9 @@ const svg =
 document.getElementById("connections");
 
 
-/* ==================================================
+/* =========================
    VOICE
-================================================== */
+========================= */
 
 function speak(text){
 
@@ -796,18 +733,17 @@ function speak(text){
 
     voice.rate = .85;
 
-    voice.pitch = 1.1;
+    voice.pitch = 1.08;
 
     speechSynthesis.speak(voice);
-
 }
 
 
-/* ==================================================
-   SOUND
-================================================== */
+/* =========================
+   GAME SOUNDS
+========================= */
 
-function sound(type){
+function playSound(type){
 
     try{
 
@@ -830,93 +766,136 @@ function sound(type){
         gain.connect(audio.destination);
 
 
-        if(type==="correct"){
+        if(type === "grab"){
+
+            oscillator.frequency.value = 500;
+
+            gain.gain.value = .04;
+
+            oscillator.start();
+
+            oscillator.stop(
+                audio.currentTime + .08
+            );
+
+        }
+
+
+        if(type === "correct"){
 
             oscillator.frequency.setValueAtTime(
                 600,
                 audio.currentTime
             );
 
-            oscillator.frequency.exponentialRampToValueAtTime(
+            oscillator.frequency.setValueAtTime(
+                800,
+                audio.currentTime + .10
+            );
+
+            oscillator.frequency.setValueAtTime(
                 1000,
-                audio.currentTime+.2
+                audio.currentTime + .20
+            );
+
+            gain.gain.value = .08;
+
+            oscillator.start();
+
+            oscillator.stop(
+                audio.currentTime + .30
             );
 
         }
 
 
-        if(type==="wrong"){
+        if(type === "wrong"){
 
             oscillator.frequency.setValueAtTime(
-                180,
+                220,
                 audio.currentTime
             );
 
-            oscillator.frequency.exponentialRampToValueAtTime(
-                100,
-                audio.currentTime+.2
+            oscillator.frequency.setValueAtTime(
+                150,
+                audio.currentTime + .12
+            );
+
+            gain.gain.value = .07;
+
+            oscillator.start();
+
+            oscillator.stop(
+                audio.currentTime + .20
             );
 
         }
 
 
-        gain.gain.setValueAtTime(
-            .08,
-            audio.currentTime
-        );
+        if(type === "finish"){
 
-        gain.gain.exponentialRampToValueAtTime(
-            .001,
-            audio.currentTime+.25
-        );
+            oscillator.frequency.setValueAtTime(
+                700,
+                audio.currentTime
+            );
 
+            oscillator.frequency.setValueAtTime(
+                900,
+                audio.currentTime + .12
+            );
 
-        oscillator.start();
+            oscillator.frequency.setValueAtTime(
+                1100,
+                audio.currentTime + .24
+            );
 
-        oscillator.stop(
-            audio.currentTime+.25
-        );
+            oscillator.frequency.setValueAtTime(
+                1300,
+                audio.currentTime + .36
+            );
+
+            gain.gain.value = .09;
+
+            oscillator.start();
+
+            oscillator.stop(
+                audio.currentTime + .5
+            );
+
+        }
+
+    }catch(error){
+
+        console.log("Sound unavailable");
 
     }
-
-    catch(e){}
-
 }
 
 
-/* ==================================================
-   DRAG
-================================================== */
+/* =========================
+   START DRAG
+========================= */
 
-cards.forEach(card=>{
-
-    card.addEventListener(
-        "pointerdown",
-        startDrag
-    );
-
-});
-
-
-function startDrag(e){
+function startDrag(event){
 
     if(
-        this.classList.contains(
-            "matched"
-        )
+        this.classList.contains("matched")
     )
         return;
 
 
-    draggedCard = this;
+    dragged = this;
 
-    this.classList.add(
-        "dragging"
-    );
+    dragged.classList.add("dragging");
+
+
+    playSound("grab");
 
 
     speak(
-        this.dataset.answer
+        this
+        .querySelector(".card-name")
+        .textContent
     );
 
 
@@ -925,28 +904,28 @@ function startDrag(e){
 
 
     offsetX =
-        e.clientX -
-        rect.left;
+        event.clientX - rect.left;
 
     offsetY =
-        e.clientY -
-        rect.top;
+        event.clientY - rect.top;
 
 
     this.style.width =
-        rect.width+"px";
+        rect.width + "px";
+
 
     this.style.left =
-        e.clientX -
-        offsetX+"px";
+        event.clientX -
+        offsetX + "px";
+
 
     this.style.top =
-        e.clientY -
-        offsetY+"px";
+        event.clientY -
+        offsetY + "px";
 
 
     this.setPointerCapture(
-        e.pointerId
+        event.pointerId
     );
 
 
@@ -961,28 +940,27 @@ function startDrag(e){
         endDrag,
         {once:true}
     );
-
 }
 
 
-/* ==================================================
+/* =========================
    MOVE
-================================================== */
+========================= */
 
-function moveDrag(e){
+function moveDrag(event){
 
-    if(!draggedCard)
+    if(!dragged)
         return;
 
 
-    draggedCard.style.left =
-        e.clientX -
-        offsetX+"px";
+    dragged.style.left =
+        event.clientX -
+        offsetX + "px";
 
 
-    draggedCard.style.top =
-        e.clientY -
-        offsetY+"px";
+    dragged.style.top =
+        event.clientY -
+        offsetY + "px";
 
 
     targets.forEach(target=>{
@@ -992,10 +970,10 @@ function moveDrag(e){
 
 
         const inside =
-            e.clientX >= rect.left &&
-            e.clientX <= rect.right &&
-            e.clientY >= rect.top &&
-            e.clientY <= rect.bottom;
+            event.clientX >= rect.left &&
+            event.clientX <= rect.right &&
+            event.clientY >= rect.top &&
+            event.clientY <= rect.bottom;
 
 
         target.classList.toggle(
@@ -1008,14 +986,14 @@ function moveDrag(e){
 }
 
 
-/* ==================================================
-   END
-================================================== */
+/* =========================
+   END DRAG
+========================= */
 
-function endDrag(e){
+function endDrag(event){
 
     const card =
-        draggedCard;
+        dragged;
 
 
     card.removeEventListener(
@@ -1028,31 +1006,30 @@ function endDrag(e){
         card.getBoundingClientRect();
 
 
-    const x =
+    const centerX =
         rect.left +
-        rect.width/2;
+        rect.width / 2;
 
 
-    const y =
+    const centerY =
         rect.top +
-        rect.height/2;
+        rect.height / 2;
 
 
-    let targetFound =
-        null;
+    let targetFound = null;
 
 
     targets.forEach(target=>{
 
-        const r =
+        const targetRect =
             target.getBoundingClientRect();
 
 
         if(
-            x>=r.left &&
-            x<=r.right &&
-            y>=r.top &&
-            y<=r.bottom
+            centerX >= targetRect.left &&
+            centerX <= targetRect.right &&
+            centerY >= targetRect.top &&
+            centerY <= targetRect.bottom
         ){
 
             targetFound =
@@ -1079,23 +1056,20 @@ function endDrag(e){
             targetFound
         );
 
-    }
-
-    else{
+    }else{
 
         wrongMatch(card);
 
     }
 
 
-    draggedCard = null;
-
+    dragged = null;
 }
 
 
-/* ==================================================
-   CORRECT
-================================================== */
+/* =========================
+   CORRECT MATCH
+========================= */
 
 function correctMatch(
     card,
@@ -1139,7 +1113,7 @@ function correctMatch(
     );
 
 
-    sound("correct");
+    playSound("correct");
 
 
     speak(
@@ -1153,45 +1127,38 @@ function correctMatch(
     );
 
 
-    if(completed===10){
+    resetCard(card);
+
+
+    if(completed === 10){
 
         setTimeout(()=>{
+
+            playSound("finish");
 
             speak(
                 "Amazing! You matched all the adjectives!"
             );
+
 
             showMessage(
                 "🏆 AMAZING!",
                 3000
             );
 
-            confetti();
 
-        },700);
+            createConfetti();
+
+        },800);
 
     }
-
-
-    setTimeout(()=>{
-
-        card.style.position =
-            "relative";
-
-        card.style.left = "";
-
-        card.style.top = "";
-
-        card.style.width = "";
-
-    },300);
 
 }
 
 
-/* ==================================================
-   CONNECTION LINE
-================================================== */
+/* =========================
+   DRAW CONNECTION
+========================= */
 
 function drawConnection(
     card,
@@ -1204,33 +1171,33 @@ function drawConnection(
         .getBoundingClientRect();
 
 
-    const c =
+    const cardRect =
         card.getBoundingClientRect();
 
 
-    const t =
+    const targetRect =
         target.getBoundingClientRect();
 
 
     const x1 =
-        c.right -
+        cardRect.right -
         board.left;
 
 
     const y1 =
-        c.top +
-        c.height/2 -
+        cardRect.top +
+        cardRect.height / 2 -
         board.top;
 
 
     const x2 =
-        t.left -
+        targetRect.left -
         board.left;
 
 
     const y2 =
-        t.top +
-        t.height/2 -
+        targetRect.top +
+        targetRect.height / 2 -
         board.top;
 
 
@@ -1274,31 +1241,14 @@ function drawConnection(
 }
 
 
-/* ==================================================
-   WRONG
-================================================== */
+/* =========================
+   WRONG MATCH
+========================= */
 
 function wrongMatch(card){
 
-    card.classList.remove(
-        "dragging"
-    );
+    playSound("wrong");
 
-
-    card.animate(
-        [
-            {transform:"translateX(0)"},
-            {transform:"translateX(-10px)"},
-            {transform:"translateX(10px)"},
-            {transform:"translateX(0)"}
-        ],
-        {
-            duration:400
-        }
-    );
-
-
-    sound("wrong");
 
     speak(
         "Try again!"
@@ -1309,6 +1259,48 @@ function wrongMatch(card){
         "💭 Try again!"
     );
 
+
+    card.animate(
+
+        [
+            {
+                transform:
+                "translateX(0)"
+            },
+
+            {
+                transform:
+                "translateX(-10px)"
+            },
+
+            {
+                transform:
+                "translateX(10px)"
+            },
+
+            {
+                transform:
+                "translateX(0)"
+            }
+
+        ],
+
+        {
+            duration:400
+        }
+
+    );
+
+
+    resetCard(card);
+}
+
+
+/* =========================
+   RESET CARD
+========================= */
+
+function resetCard(card){
 
     setTimeout(()=>{
 
@@ -1326,33 +1318,33 @@ function wrongMatch(card){
 }
 
 
-/* ==================================================
+/* =========================
    MESSAGE
-================================================== */
+========================= */
 
 function showMessage(
     text,
-    duration=900
+    duration = 900
 ){
 
-    const box =
+    const message =
         document.getElementById(
             "message"
         );
 
 
-    box.textContent =
+    message.textContent =
         text;
 
 
-    box.classList.add(
+    message.classList.add(
         "show"
     );
 
 
     setTimeout(()=>{
 
-        box.classList.remove(
+        message.classList.remove(
             "show"
         );
 
@@ -1361,15 +1353,15 @@ function showMessage(
 }
 
 
-/* ==================================================
+/* =========================
    CONFETTI
-================================================== */
+========================= */
 
-function confetti(){
+function createConfetti(){
 
     for(
-        let i=0;
-        i<40;
+        let i = 0;
+        i < 50;
         i++
     ){
 
@@ -1385,12 +1377,16 @@ function confetti(){
 
         piece.style.left =
             Math.random() *
-            innerWidth+"px";
+            window.innerWidth +
+            "px";
 
 
         piece.style.background =
-            `hsl(${Math.random()*360},
-            80%,60%)`;
+            `hsl(
+                ${Math.random()*360},
+                80%,
+                60%
+            )`;
 
 
         document.body.appendChild(
@@ -1398,14 +1394,29 @@ function confetti(){
         );
 
 
-        setTimeout(
-            ()=>piece.remove(),
-            2000
-        );
+        setTimeout(()=>{
+
+            piece.remove();
+
+        },2000);
 
     }
 
 }
+
+
+/* =========================
+   ACTIVATE CARDS
+========================= */
+
+cards.forEach(card=>{
+
+    card.addEventListener(
+        "pointerdown",
+        startDrag
+    );
+
+});
 
 </script>
 
